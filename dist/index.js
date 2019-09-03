@@ -15879,20 +15879,20 @@ exports.default = decodeCodePoint;
 
 unwrapExports(decode_codepoint$1);
 
-var require$$1 = getCjsExportFromNamespace(entities$3);
+var require$$0$1 = getCjsExportFromNamespace(entities$3);
 
-var require$$1$1 = getCjsExportFromNamespace(legacy$3);
+var require$$1 = getCjsExportFromNamespace(legacy$3);
 
-var require$$0$1 = getCjsExportFromNamespace(xml$3);
+var require$$2 = getCjsExportFromNamespace(xml$3);
 
 var decode$4 = createCommonjsModule(function (module, exports) {
 var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var entities_json_1 = __importDefault(require$$1);
-var legacy_json_1 = __importDefault(require$$1$1);
-var xml_json_1 = __importDefault(require$$0$1);
+var entities_json_1 = __importDefault(require$$0$1);
+var legacy_json_1 = __importDefault(require$$1);
+var xml_json_1 = __importDefault(require$$2);
 var decode_codepoint_1 = __importDefault(decode_codepoint$1);
 exports.decodeXML = getStrictDecoder(xml_json_1.default);
 exports.decodeHTMLStrict = getStrictDecoder(entities_json_1.default);
@@ -15951,11 +15951,11 @@ var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || func
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var xml_json_1 = __importDefault(require$$0$1);
+var xml_json_1 = __importDefault(require$$2);
 var inverseXML = getInverseObj(xml_json_1.default);
 var xmlReplacer = getInverseReplacer(inverseXML);
 exports.encodeXML = getInverse(inverseXML, xmlReplacer);
-var entities_json_1 = __importDefault(require$$1);
+var entities_json_1 = __importDefault(require$$0$1);
 var inverseHTML = getInverseObj(entities_json_1.default);
 var htmlReplacer = getInverseReplacer(inverseHTML);
 exports.encodeHTML = getInverse(inverseHTML, htmlReplacer);
