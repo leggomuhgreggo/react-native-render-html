@@ -2,17 +2,19 @@
   "exclude": "node_modules/**",
   "presets": [
     ["@babel/env", {
-      "modules": false,
+      corejs: 3,
+      modules: false,
+      useBuiltIns: 'usage',
+      targets: {
+        ie: '11',
+      },
     }],
     "@babel/preset-react"
   ],
   "plugins": [
     "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-transform-regenerator",
     ["@babel/plugin-transform-runtime", {
       "regenerator": true
     }]
   ]
 }
-
-
