@@ -1,6 +1,6 @@
 import babel from "rollup-plugin-babel";
 import commonjs from "rollup-plugin-commonjs";
-import external from "rollup-plugin-peer-deps-external";
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from "rollup-plugin-postcss";
 import resolve from "rollup-plugin-node-resolve";
 import json from "rollup-plugin-json";
@@ -19,7 +19,7 @@ export default {
     }
   ],
   plugins: [
-    external(),
+    peerDepsExternal(),
     json(),
     postcss({
       modules: true
@@ -27,8 +27,16 @@ export default {
     url(),
     svgr(),
     babel({
-      exclude: "node_modules/**",
-      plugins: ["external-helpers"]
+      exclude: 'node_modules/**',
+      plugins: [
+        '@babel/plugin-proposal-class-properties',
+      ],
+      presets: [
+        ["@babel/env", {
+          "modules": false,
+        }],
+        "@babel/preset-react"
+      ],
     }),
     resolve(),
     commonjs()

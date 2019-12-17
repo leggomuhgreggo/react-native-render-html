@@ -2,68 +2,37 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var events = _interopDefault(require('events'));
-var stream = _interopDefault(require('stream'));
-var string_decoder = _interopDefault(require('string_decoder'));
-var reactNative = require('react-native');
 var React = require('react');
 var React__default = _interopDefault(React);
 var PropTypes = _interopDefault(require('prop-types'));
+var reactNative = require('react-native');
+var events = _interopDefault(require('events'));
+var stream = _interopDefault(require('stream'));
+var string_decoder = _interopDefault(require('string_decoder'));
 
-var asyncToGenerator = function (fn) {
-  return function () {
-    var gen = fn.apply(this, arguments);
-    return new Promise(function (resolve, reject) {
-      function step(key, arg) {
-        try {
-          var info = gen[key](arg);
-          var value = info.value;
-        } catch (error) {
-          reject(error);
-          return;
-        }
-
-        if (info.done) {
-          resolve(value);
-        } else {
-          return Promise.resolve(value).then(function (value) {
-            step("next", value);
-          }, function (err) {
-            step("throw", err);
-          });
-        }
-      }
-
-      return step("next");
-    });
-  };
-};
-
-var classCallCheck = function (instance, Constructor) {
+function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
   }
-};
+}
 
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
   }
+}
 
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
 
-var defineProperty = function (obj, key, value) {
+function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -76,83 +45,148 @@ var defineProperty = function (obj, key, value) {
   }
 
   return obj;
-};
+}
 
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
 
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
       }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
     }
   }
 
   return target;
-};
+}
 
-var inherits = function (subClass, superClass) {
+function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    throw new TypeError("Super expression must either be null or a function");
   }
 
   subClass.prototype = Object.create(superClass && superClass.prototype, {
     constructor: {
       value: subClass,
-      enumerable: false,
       writable: true,
       configurable: true
     }
   });
-  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-};
+  if (superClass) _setPrototypeOf(subClass, superClass);
+}
 
-var possibleConstructorReturn = function (self, call) {
-  if (!self) {
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
   }
 
-  return call && (typeof call === "object" || typeof call === "function") ? call : self;
-};
+  return self;
+}
 
-var slicedToArray = function () {
-  function sliceIterator(arr, i) {
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _e = undefined;
-
-    try {
-      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"]) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-
-    return _arr;
+function _possibleConstructorReturn(self, call) {
+  if (call && (typeof call === "object" || typeof call === "function")) {
+    return call;
   }
 
-  return function (arr, i) {
-    if (Array.isArray(arr)) {
-      return arr;
-    } else if (Symbol.iterator in Object(arr)) {
-      return sliceIterator(arr, i);
-    } else {
-      throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  return _assertThisInitialized(self);
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+    return;
+  }
+
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
     }
-  };
-}();
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+}
 
 var _stylePropTypes;
 
@@ -160,118 +194,123 @@ var _stylePropTypes;
 // a style checking at runtime while keeping the module compatible with all react-native versions.
 var ImageStylePropTypes = ['display', 'width', 'height', 'start', 'end', 'top', 'left', 'right', 'bottom', 'minWidth', 'maxWidth', 'minHeight', 'maxHeight', 'margin', 'marginVertical', 'marginHorizontal', 'marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'marginStart', 'marginEnd', 'padding', 'paddingVertical', 'paddingHorizontal', 'paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight', 'paddingStart', 'paddingEnd', 'borderWidth', 'borderTopWidth', 'borderStartWidth', 'borderEndWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth', 'position', 'flexDirection', 'flexWrap', 'justifyContent', 'alignItems', 'alignSelf', 'alignContent', 'overflow', 'flex', 'flexGrow', 'flexShrink', 'flexBasis', 'aspectRatio', 'zIndex', 'direction', 'shadowColor', 'shadowOffset', 'shadowOpacity', 'shadowRadius', 'transform', 'transformMatrix', 'decomposedMatrix', 'scaleX', 'scaleY', 'rotation', 'translateX', 'translateY', 'resizeMode', 'backfaceVisibility', 'backgroundColor', 'borderColor', 'borderRadius', 'tintColor', 'opacity', 'overlayColor', 'borderTopLeftRadius', 'borderTopRightRadius', 'borderBottomLeftRadius', 'borderBottomRightRadius'];
 var ViewStylePropTypes = ['display', 'width', 'height', 'start', 'end', 'top', 'left', 'right', 'bottom', 'minWidth', 'maxWidth', 'minHeight', 'maxHeight', 'margin', 'marginVertical', 'marginHorizontal', 'marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'marginStart', 'marginEnd', 'padding', 'paddingVertical', 'paddingHorizontal', 'paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight', 'paddingStart', 'paddingEnd', 'borderWidth', 'borderTopWidth', 'borderStartWidth', 'borderEndWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth', 'position', 'flexDirection', 'flexWrap', 'justifyContent', 'alignItems', 'alignSelf', 'alignContent', 'overflow', 'flex', 'flexGrow', 'flexShrink', 'flexBasis', 'aspectRatio', 'zIndex', 'direction', 'shadowColor', 'shadowOffset', 'shadowOpacity', 'shadowRadius', 'transform', 'transformMatrix', 'decomposedMatrix', 'scaleX', 'scaleY', 'rotation', 'translateX', 'translateY', 'backfaceVisibility', 'backgroundColor', 'borderColor', 'borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor', 'borderStartColor', 'borderEndColor', 'borderRadius', 'borderTopLeftRadius', 'borderTopRightRadius', 'borderTopStartRadius', 'borderTopEndRadius', 'borderBottomLeftRadius', 'borderBottomRightRadius', 'borderBottomStartRadius', 'borderBottomEndRadius', 'borderStyle', 'opacity', 'elevation'];
-var TextStylePropTypes = ['display', 'width', 'height', 'start', 'end', 'top', 'left', 'right', 'bottom', 'minWidth', 'maxWidth', 'minHeight', 'maxHeight', 'margin', 'marginVertical', 'marginHorizontal', 'marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'marginStart', 'marginEnd', 'padding', 'paddingVertical', 'paddingHorizontal', 'paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight', 'paddingStart', 'paddingEnd', 'borderWidth', 'borderTopWidth', 'borderStartWidth', 'borderEndWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth', 'position', 'flexDirection', 'flexWrap', 'justifyContent', 'alignItems', 'alignSelf', 'alignContent', 'overflow', 'flex', 'flexGrow', 'flexShrink', 'flexBasis', 'aspectRatio', 'zIndex', 'direction', 'shadowColor', 'shadowOffset', 'shadowOpacity', 'shadowRadius', 'transform', 'transformMatrix', 'decomposedMatrix', 'scaleX', 'scaleY', 'rotation', 'translateX', 'translateY', 'backfaceVisibility', 'backgroundColor', 'borderColor', 'borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor', 'borderStartColor', 'borderEndColor', 'borderRadius', 'borderTopLeftRadius', 'borderTopRightRadius', 'borderTopStartRadius', 'borderTopEndRadius', 'borderBottomLeftRadius', 'borderBottomRightRadius', 'borderBottomStartRadius', 'borderBottomEndRadius', 'borderStyle', 'opacity', 'elevation', 'color', 'fontFamily', 'fontSize', 'fontStyle', 'fontWeight', 'fontVariant', 'textShadowOffset', 'textShadowRadius', 'textShadowColor', 'letterSpacing', 'lineHeight', 'textAlign', 'textAlignVertical', 'includeFontPadding', 'textDecorationLine', 'textDecorationStyle', 'textDecorationColor', 'textTransform', 'writingDirection'];
+var TextStylePropTypes = ['display', 'width', 'height', 'start', 'end', 'top', 'left', 'right', 'bottom', 'minWidth', 'maxWidth', 'minHeight', 'maxHeight', 'margin', 'marginVertical', 'marginHorizontal', 'marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'marginStart', 'marginEnd', 'padding', 'paddingVertical', 'paddingHorizontal', 'paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight', 'paddingStart', 'paddingEnd', 'borderWidth', 'borderTopWidth', 'borderStartWidth', 'borderEndWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth', 'position', 'flexDirection', 'flexWrap', 'justifyContent', 'alignItems', 'alignSelf', 'alignContent', 'overflow', 'flex', 'flexGrow', 'flexShrink', 'flexBasis', 'aspectRatio', 'zIndex', 'direction', 'shadowColor', 'shadowOffset', 'shadowOpacity', 'shadowRadius', 'transform', 'transformMatrix', 'decomposedMatrix', 'scaleX', 'scaleY', 'rotation', 'translateX', 'translateY', 'backfaceVisibility', 'backgroundColor', 'borderColor', 'borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor', 'borderStartColor', 'borderEndColor', 'borderRadius', 'borderTopLeftRadius', 'borderTopRightRadius', 'borderTopStartRadius', 'borderTopEndRadius', 'borderBottomLeftRadius', 'borderBottomRightRadius', 'borderBottomStartRadius', 'borderBottomEndRadius', 'borderStyle', 'opacity', 'elevation', 'color', 'fontFamily', 'fontSize', 'fontStyle', 'fontWeight', 'fontVariant', 'textShadowOffset', 'textShadowRadius', 'textShadowColor', 'letterSpacing', 'lineHeight', 'textAlign', 'textAlignVertical', 'includeFontPadding', 'textDecorationLine', 'textDecorationStyle', 'textDecorationColor', 'textTransform', 'writingDirection']; // Filter prop-types that are only applicable to <Text> and not <View>
 
-// Filter prop-types that are only applicable to <Text> and not <View>
 var TextOnlyPropTypes = TextStylePropTypes.filter(function (prop) {
-    return ViewStylePropTypes.indexOf(prop) === -1;
-});
+  return ViewStylePropTypes.indexOf(prop) === -1;
+}); // These tags should ALWAYS be mapped to View wrappers
 
-// These tags should ALWAYS be mapped to View wrappers
-var BLOCK_TAGS = ['address', 'article', 'aside', 'footer', 'hgroup', 'nav', 'section', 'blockquote', 'dd', 'dl', 'dt', 'figure', 'hr', 'li', 'main', 'ol', 'ul', 'cite', 'data', 'rp', 'rtc', 'ruby', 'area', 'img', 'map', 'center'];
+var BLOCK_TAGS = ['address', 'article', 'aside', 'footer', 'hgroup', 'nav', 'section', 'blockquote', 'dd', 'dl', 'dt', 'figure', 'hr', 'li', 'main', 'ol', 'ul', 'cite', 'data', 'rp', 'rtc', 'ruby', 'area', 'img', 'map', 'center']; // These tags should ALWAYS be mapped to Text wrappers
 
-// These tags should ALWAYS be mapped to Text wrappers
-var TEXT_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'figcaption', 'p', 'pre', 'abbr', 'b', 'bdi', 'bdo', 'code', 'dfn', 'i', 'kbd', 'mark', 'q', 'rt', 's', 'samp', 'small', 'big', 'span', 'strong', 'sub', 'sup', 'time', 'u', 'var', 'wbr', 'del', 'ins', 'blink', 'font', 'em', 'bold', 'br'];
+var TEXT_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'figcaption', 'p', 'pre', 'abbr', 'b', 'bdi', 'bdo', 'code', 'dfn', 'i', 'kbd', 'mark', 'q', 'rt', 's', 'samp', 'small', 'big', 'span', 'strong', 'sub', 'sup', 'time', 'u', 'var', 'wbr', 'del', 'ins', 'blink', 'font', 'em', 'bold', 'br']; // Text in these tags should not be stripped from line breaks
 
-// Text in these tags should not be stripped from line breaks
-var PREFORMATTED_TAGS = ['pre'];
+var PREFORMATTED_TAGS = ['pre']; // These tags can either be mapped to View or Text wrappers, depending solely on their children
 
-// These tags can either be mapped to View or Text wrappers, depending solely on their children
-var MIXED_TAGS = ['a'];
+var MIXED_TAGS = ['a']; // These text tags shouldn't be associated with their siblings in the associateRawTags method
 
-// These text tags shouldn't be associated with their siblings in the associateRawTags method
 var TEXT_TAGS_IGNORING_ASSOCIATION = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
-
 var ABSOLUTE_FONT_SIZE = {
-    'medium': 14,
-    'xx-small': 8.5,
-    'x-small': 10,
-    'small': 12,
-    'large': 17,
-    'x-large': 20,
-    'xx-large': 24,
-    'smaller': 13.3,
-    'larger': 16,
-    'length': null,
-    'initial': null,
-    'inherit': null,
-    'unset': null
+  'medium': 14,
+  'xx-small': 8.5,
+  'x-small': 10,
+  'small': 12,
+  'large': 17,
+  'x-large': 20,
+  'xx-large': 24,
+  'smaller': 13.3,
+  'larger': 16,
+  'length': null,
+  'initial': null,
+  'inherit': null,
+  'unset': null
 };
+var IGNORED_TAGS = ['head', 'scripts', 'audio', 'video', 'track', 'embed', 'object', 'param', 'source', 'canvas', 'noscript', 'caption', 'col', 'colgroup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'button', 'datalist', 'fieldset', 'form', 'input', 'label', 'legend', 'meter', 'optgroup', 'option', 'output', 'progress', 'select', 'textarea', 'details', 'diaglog', 'menu', 'menuitem', 'summary']; // As of react-native 0.48, this might change in the future
 
-var IGNORED_TAGS = ['head', 'scripts', 'audio', 'video', 'track', 'embed', 'object', 'param', 'source', 'canvas', 'noscript', 'caption', 'col', 'colgroup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'button', 'datalist', 'fieldset', 'form', 'input', 'label', 'legend', 'meter', 'optgroup', 'option', 'output', 'progress', 'select', 'textarea', 'details', 'diaglog', 'menu', 'menuitem', 'summary'];
-
-// As of react-native 0.48, this might change in the future
 var PERC_SUPPORTED_STYLES = ['width', 'height', 'top', 'bottom', 'left', 'right', 'margin', 'marginBottom', 'marginTop', 'marginLeft', 'marginRight', 'marginHorizontal', 'marginVertical', 'padding', 'paddingBottom', 'paddingTop', 'paddingLeft', 'paddingRight', 'paddingHorizontal', 'paddingVertical'];
-
-var STYLESETS = Object.freeze({ VIEW: 'view', TEXT: 'text', IMAGE: 'image' });
-var stylePropTypes = (_stylePropTypes = {}, defineProperty(_stylePropTypes, STYLESETS.VIEW, ViewStylePropTypes), defineProperty(_stylePropTypes, STYLESETS.TEXT, TextStylePropTypes), defineProperty(_stylePropTypes, STYLESETS.IMAGE, ImageStylePropTypes), _stylePropTypes);
+var STYLESETS = Object.freeze({
+  VIEW: 'view',
+  TEXT: 'text',
+  IMAGE: 'image'
+});
+var stylePropTypes = (_stylePropTypes = {}, _defineProperty(_stylePropTypes, STYLESETS.VIEW, ViewStylePropTypes), _defineProperty(_stylePropTypes, STYLESETS.TEXT, TextStylePropTypes), _defineProperty(_stylePropTypes, STYLESETS.IMAGE, ImageStylePropTypes), _stylePropTypes);
 
 var BASE_FONT_SIZE = 14;
-
 function generateDefaultBlockStyles() {
-    var baseFontSize = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : BASE_FONT_SIZE;
-
-    return {
-        div: {},
-        ul: {
-            paddingLeft: 20,
-            marginBottom: baseFontSize
-        },
-        ol: {
-            paddingLeft: 20,
-            marginBottom: baseFontSize
-        },
-        iframe: {
-            height: 200
-        },
-        hr: {
-            marginTop: baseFontSize / 2,
-            marginBottom: baseFontSize / 2,
-            height: 1,
-            backgroundColor: '#CCC'
-        }
-    };
+  var baseFontSize = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : BASE_FONT_SIZE;
+  return {
+    div: {},
+    ul: {
+      paddingLeft: 20,
+      marginBottom: baseFontSize
+    },
+    ol: {
+      paddingLeft: 20,
+      marginBottom: baseFontSize
+    },
+    iframe: {
+      height: 200
+    },
+    hr: {
+      marginTop: baseFontSize / 2,
+      marginBottom: baseFontSize / 2,
+      height: 1,
+      backgroundColor: '#CCC'
+    }
+  };
 }
-
 function generateDefaultTextStyles() {
-    var baseFontSize = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : BASE_FONT_SIZE;
-
-    return {
-        u: { textDecorationLine: 'underline' },
-        em: { fontStyle: 'italic' },
-        i: { fontStyle: 'italic' },
-        b: { fontWeight: 'bold' },
-        s: { textDecorationLine: 'line-through' },
-        strong: { fontWeight: 'bold' },
-        big: { fontSize: baseFontSize * 1.2 },
-        small: { fontSize: baseFontSize * 0.8 },
-        a: {
-            textDecorationLine: 'underline',
-            color: '#245dc1'
-        },
-        h1: _generateHeadingStyle(baseFontSize, 2, 0.67),
-        h2: _generateHeadingStyle(baseFontSize, 1.5, 0.83),
-        h3: _generateHeadingStyle(baseFontSize, 1.17, 1),
-        h4: _generateHeadingStyle(baseFontSize, 1, 1.33),
-        h5: _generateHeadingStyle(baseFontSize, 0.83, 1.67),
-        h6: _generateHeadingStyle(baseFontSize, 0.67, 2.33),
-        sub: {
-            textAlignVertical: 'top',
-            fontSize: baseFontSize * 0.8,
-            marginTop: baseFontSize / 2
-        },
-        sup: {
-            textAlignVertical: 'top',
-            fontSize: baseFontSize * 0.8,
-            marginBottom: baseFontSize / 2
-        },
-        p: {
-            marginTop: baseFontSize,
-            marginBottom: baseFontSize
-        }
-    };
+  var baseFontSize = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : BASE_FONT_SIZE;
+  return {
+    u: {
+      textDecorationLine: 'underline'
+    },
+    em: {
+      fontStyle: 'italic'
+    },
+    i: {
+      fontStyle: 'italic'
+    },
+    b: {
+      fontWeight: 'bold'
+    },
+    s: {
+      textDecorationLine: 'line-through'
+    },
+    strong: {
+      fontWeight: 'bold'
+    },
+    big: {
+      fontSize: baseFontSize * 1.2
+    },
+    small: {
+      fontSize: baseFontSize * 0.8
+    },
+    a: {
+      textDecorationLine: 'underline',
+      color: '#245dc1'
+    },
+    h1: _generateHeadingStyle(baseFontSize, 2, 0.67),
+    h2: _generateHeadingStyle(baseFontSize, 1.5, 0.83),
+    h3: _generateHeadingStyle(baseFontSize, 1.17, 1),
+    h4: _generateHeadingStyle(baseFontSize, 1, 1.33),
+    h5: _generateHeadingStyle(baseFontSize, 0.83, 1.67),
+    h6: _generateHeadingStyle(baseFontSize, 0.67, 2.33),
+    sub: {
+      textAlignVertical: 'top',
+      fontSize: baseFontSize * 0.8,
+      marginTop: baseFontSize / 2
+    },
+    sup: {
+      textAlignVertical: 'top',
+      fontSize: baseFontSize * 0.8,
+      marginBottom: baseFontSize / 2
+    },
+    p: {
+      marginTop: baseFontSize,
+      marginBottom: baseFontSize
+    }
+  };
 }
-
 /**
 * Small utility for generating heading styles
 * @param baseFontSize: the basic font size
@@ -279,13 +318,14 @@ function generateDefaultTextStyles() {
 * @param marginMultiplier: the amount to multiply the margin by
 * @return a style def for a heading
 */
+
 function _generateHeadingStyle(baseFontSize, fontMultiplier, marginMultiplier) {
-    return {
-        fontSize: baseFontSize * fontMultiplier,
-        marginTop: baseFontSize * fontMultiplier * marginMultiplier,
-        marginBottom: baseFontSize * fontMultiplier * marginMultiplier,
-        fontWeight: 'bold'
-    };
+  return {
+    fontSize: baseFontSize * fontMultiplier,
+    marginTop: baseFontSize * fontMultiplier * marginMultiplier,
+    marginBottom: baseFontSize * fontMultiplier * marginMultiplier,
+    fontWeight: 'bold'
+  };
 }
 
 /**
@@ -293,25 +333,25 @@ function _generateHeadingStyle(baseFontSize, fontMultiplier, marginMultiplier) {
 * @param str: the style string
 * @return the style as an obect
 */
+
 function cssStringToObject(str) {
-    return str.split(';').map(function (prop) {
-        return prop.split(':');
-    }).reduce(function (acc, prop) {
-        if (prop.length === 2) {
-            acc[prop[0].trim()] = prop[1].trim();
-        }
-        return acc;
-    }, {});
-}
+  return str.split(';').map(function (prop) {
+    return prop.split(':');
+  }).reduce(function (acc, prop) {
+    if (prop.length === 2) {
+      acc[prop[0].trim()] = prop[1].trim();
+    }
 
+    return acc;
+  }, {});
+}
 function cssObjectToString(obj) {
-    var string = '';
-    Object.keys(obj).forEach(function (style) {
-        string += style + ':' + obj[style] + ';';
-    });
-    return string;
+  var string = '';
+  Object.keys(obj).forEach(function (style) {
+    string += "".concat(style, ":").concat(obj[style], ";");
+  });
+  return string;
 }
-
 /**
  * Helper that composes styles with the default style for a tag, the "style" attribute and
  * any given addiitional style. Checks everything against the style sets of views, images,
@@ -320,33 +360,32 @@ function cssObjectToString(obj) {
  * @param {any} { tagName, htmlAttribs, passProps, additionalStyles, styleSet = 'VIEW' }
  * @returns {object}
  */
+
 function _constructStyles(_ref) {
-    var tagName = _ref.tagName,
-        htmlAttribs = _ref.htmlAttribs,
-        passProps = _ref.passProps,
-        additionalStyles = _ref.additionalStyles,
-        _ref$styleSet = _ref.styleSet,
-        styleSet = _ref$styleSet === undefined ? 'VIEW' : _ref$styleSet,
-        baseFontSize = _ref.baseFontSize;
+  var tagName = _ref.tagName,
+      htmlAttribs = _ref.htmlAttribs,
+      passProps = _ref.passProps,
+      additionalStyles = _ref.additionalStyles,
+      _ref$styleSet = _ref.styleSet,
+      styleSet = _ref$styleSet === void 0 ? 'VIEW' : _ref$styleSet,
+      baseFontSize = _ref.baseFontSize;
+  var defaultTextStyles = generateDefaultTextStyles(baseFontSize);
+  var defaultBlockStyles = generateDefaultBlockStyles(baseFontSize);
+  passProps.ignoredStyles.forEach(function (ignoredStyle) {
+    htmlAttribs[ignoredStyle] && delete htmlAttribs[ignoredStyle];
+  });
+  var style = [(styleSet === 'VIEW' ? defaultBlockStyles : defaultTextStyles)[tagName], passProps.tagsStyles ? passProps.tagsStyles[tagName] : undefined, _getElementClassStyles(htmlAttribs, passProps.classesStyles), htmlAttribs.style ? cssStringToRNStyle(htmlAttribs.style, STYLESETS[styleSet], _objectSpread2({}, passProps, {
+    parentTag: tagName
+  })) : undefined];
 
-    var defaultTextStyles = generateDefaultTextStyles(baseFontSize);
-    var defaultBlockStyles = generateDefaultBlockStyles(baseFontSize);
+  if (additionalStyles) {
+    style = style.concat(!additionalStyles.length ? [additionalStyles] : additionalStyles);
+  }
 
-    passProps.ignoredStyles.forEach(function (ignoredStyle) {
-        htmlAttribs[ignoredStyle] && delete htmlAttribs[ignoredStyle];
-    });
-
-    var style = [(styleSet === 'VIEW' ? defaultBlockStyles : defaultTextStyles)[tagName], passProps.tagsStyles ? passProps.tagsStyles[tagName] : undefined, _getElementClassStyles(htmlAttribs, passProps.classesStyles), htmlAttribs.style ? cssStringToRNStyle(htmlAttribs.style, STYLESETS[styleSet], _extends({}, passProps, { parentTag: tagName })) : undefined];
-
-    if (additionalStyles) {
-        style = style.concat(!additionalStyles.length ? [additionalStyles] : additionalStyles);
-    }
-
-    return style.filter(function (style) {
-        return style !== undefined;
-    });
+  return style.filter(function (style) {
+    return style !== undefined;
+  });
 }
-
 /**
  * Computes the styles of a text node
  * @export
@@ -354,59 +393,57 @@ function _constructStyles(_ref) {
  * @param {any} passProps set of props from the HTML component
  * @returns {object} react-native styles
  */
+
 function computeTextStyles(element, passProps) {
-    var finalStyle = {};
+  var finalStyle = {}; // Construct an array with the styles of each level of the text node, ie :
+  // [element, parent1, parent2, parent3...]
 
-    // Construct an array with the styles of each level of the text node, ie :
-    // [element, parent1, parent2, parent3...]
-    var parentStyles = _recursivelyComputeParentTextStyles(element, passProps);
+  var parentStyles = _recursivelyComputeParentTextStyles(element, passProps); // Only merge the keys that aren't yet applied to the final object. ie:
+  // if fontSize is already set in the first iteration, ignore the fontSize that
+  // we got from the 3rd iteration because of a class for instance, hence
+  // respecting the proper style inheritance
 
-    // Only merge the keys that aren't yet applied to the final object. ie:
-    // if fontSize is already set in the first iteration, ignore the fontSize that
-    // we got from the 3rd iteration because of a class for instance, hence
-    // respecting the proper style inheritance
-    parentStyles.forEach(function (styles) {
-        Object.keys(styles).forEach(function (styleKey) {
-            var styleValue = styles[styleKey];
-            if (!finalStyle[styleKey]) {
-                finalStyle[styleKey] = styleValue;
-            }
-        });
+
+  parentStyles.forEach(function (styles) {
+    Object.keys(styles).forEach(function (styleKey) {
+      var styleValue = styles[styleKey];
+
+      if (!finalStyle[styleKey]) {
+        finalStyle[styleKey] = styleValue;
+      }
     });
+  }); // Finally, try to add the baseFontStyle values to add pontentially missing
+  // styles to each text node
 
-    // Finally, try to add the baseFontStyle values to add pontentially missing
-    // styles to each text node
-    return _extends({}, passProps.baseFontStyle, finalStyle);
+  return _objectSpread2({}, passProps.baseFontStyle, {}, finalStyle);
 }
 
 function _recursivelyComputeParentTextStyles(element, passProps) {
-    var styles = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-    var attribs = element.attribs,
-        name = element.name;
-    var classesStyles = passProps.classesStyles,
-        tagsStyles = passProps.tagsStyles,
-        defaultTextStyles = passProps.defaultTextStyles;
+  var styles = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+  var attribs = element.attribs,
+      name = element.name;
+  var classesStyles = passProps.classesStyles,
+      tagsStyles = passProps.tagsStyles,
+      defaultTextStyles = passProps.defaultTextStyles; // Construct every style for this node
 
-    // Construct every style for this node
+  var HTMLAttribsStyles = attribs && attribs.style ? cssStringToRNStyle(attribs.style, STYLESETS.TEXT, passProps) : {};
 
-    var HTMLAttribsStyles = attribs && attribs.style ? cssStringToRNStyle(attribs.style, STYLESETS.TEXT, passProps) : {};
-    var classStyles = _getElementClassStyles(attribs, classesStyles);
-    var userTagStyles = tagsStyles[name];
-    var defaultTagStyles = defaultTextStyles[name];
+  var classStyles = _getElementClassStyles(attribs, classesStyles);
 
-    // Merge those according to their priority level
-    var mergedStyles = _extends({}, defaultTagStyles, userTagStyles, classStyles, HTMLAttribsStyles);
+  var userTagStyles = tagsStyles[name];
+  var defaultTagStyles = defaultTextStyles[name]; // Merge those according to their priority level
 
-    styles.push(mergedStyles);
+  var mergedStyles = _objectSpread2({}, defaultTagStyles, {}, userTagStyles, {}, classStyles, {}, HTMLAttribsStyles);
 
-    if (element.parent) {
-        // Keep looping recursively if this node has parents
-        return _recursivelyComputeParentTextStyles(element.parent, passProps, styles);
-    } else {
-        return styles;
-    }
+  styles.push(mergedStyles);
+
+  if (element.parent) {
+    // Keep looping recursively if this node has parents
+    return _recursivelyComputeParentTextStyles(element.parent, passProps, styles);
+  } else {
+    return styles;
+  }
 }
-
 /**
  * Creates a set of style from an array of classes asosciated to a node.
  * @export
@@ -414,32 +451,35 @@ function _recursivelyComputeParentTextStyles(element, passProps) {
  * @param {any} [classesStyles={}]
  * @returns {object}
  */
+
+
 function _getElementClassStyles(htmlAttribs) {
-    var classesStyles = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var classesStyles = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-    var elementClasses = _getElementCSSClasses(htmlAttribs);
-    var styles = {};
-    elementClasses.forEach(function (className) {
-        if (classesStyles[className]) {
-            styles = _extends({}, styles, classesStyles[className]);
-        }
-    });
-    return styles;
+  var elementClasses = _getElementCSSClasses(htmlAttribs);
+
+  var styles = {};
+  elementClasses.forEach(function (className) {
+    if (classesStyles[className]) {
+      styles = _objectSpread2({}, styles, {}, classesStyles[className]);
+    }
+  });
+  return styles;
 }
-
 /**
  * Simple helper that returns an array of classes of a node.
  * @export
  * @param {any} htmlAttribs
  * @returns {array}
  */
-function _getElementCSSClasses(htmlAttribs) {
-    if (!htmlAttribs || !htmlAttribs.class) {
-        return [];
-    }
-    return htmlAttribs.class.split(' ');
-}
 
+function _getElementCSSClasses(htmlAttribs) {
+  if (!htmlAttribs || !htmlAttribs["class"]) {
+    return [];
+  }
+
+  return htmlAttribs["class"].split(' ');
+}
 /**
  * Converts a html style to its equavalent react native style
  * @param {object} css: object of key value css strings
@@ -447,101 +487,112 @@ function _getElementCSSClasses(htmlAttribs) {
  * @param {object} { parentTag, emSize, ignoredStyles }
  * @returns {object}
  */
+
 function cssToRNStyle(css, styleset, _ref2) {
-    var emSize = _ref2.emSize,
-        ptSize = _ref2.ptSize,
-        ignoredStyles = _ref2.ignoredStyles,
-        allowedStyles = _ref2.allowedStyles;
+  var emSize = _ref2.emSize,
+      ptSize = _ref2.ptSize,
+      ignoredStyles = _ref2.ignoredStyles,
+      allowedStyles = _ref2.allowedStyles;
+  var styleProps = stylePropTypes[styleset];
+  return Object.keys(css).filter(function (key) {
+    return allowedStyles ? allowedStyles.indexOf(key) !== -1 : true;
+  }).filter(function (key) {
+    return (ignoredStyles || []).indexOf(key) === -1;
+  }).map(function (key) {
+    return [key, css[key]];
+  }).map(function (_ref3) {
+    var _ref4 = _slicedToArray(_ref3, 2),
+        key = _ref4[0],
+        value = _ref4[1];
 
-    var styleProps = stylePropTypes[styleset];
-    return Object.keys(css).filter(function (key) {
-        return allowedStyles ? allowedStyles.indexOf(key) !== -1 : true;
-    }).filter(function (key) {
-        return (ignoredStyles || []).indexOf(key) === -1;
-    }).map(function (key) {
-        return [key, css[key]];
-    }).map(function (_ref3) {
-        var _ref4 = slicedToArray(_ref3, 2),
-            key = _ref4[0],
-            value = _ref4[1];
+    // Key convert
+    return [key.split('-').map(function (item, index) {
+      return index === 0 ? item : item[0].toUpperCase() + item.substr(1);
+    }).join(''), value];
+  }).map(function (_ref5) {
+    var _ref6 = _slicedToArray(_ref5, 2),
+        key = _ref6[0],
+        value = _ref6[1];
 
-        // Key convert
-        return [key.split('-').map(function (item, index) {
-            return index === 0 ? item : item[0].toUpperCase() + item.substr(1);
-        }).join(''), value];
-    }).map(function (_ref5) {
-        var _ref6 = slicedToArray(_ref5, 2),
-            key = _ref6[0],
-            value = _ref6[1];
+    if (styleProps.indexOf(key) === -1) {
+      return undefined;
+    }
 
-        if (styleProps.indexOf(key) === -1) {
-            return undefined;
-        }
+    if (typeof value === 'string') {
+      if (value.search('inherit') !== -1 || value.search('calc') !== -1 || value.search('normal') !== -1) {
+        return undefined;
+      }
 
-        if (typeof value === 'string') {
-            if (value.search('inherit') !== -1 || value.search('calc') !== -1 || value.search('normal') !== -1) {
-                return undefined;
-            }
-            value = value.replace('!important', '');
-            // See if we can use the percentage directly
-            if (value.search('%') !== -1 && PERC_SUPPORTED_STYLES.indexOf(key) !== -1) {
-                return [key, value];
-            }
-            if (value.search('em') !== -1) {
-                var pxSize = parseFloat(value.replace('em', '')) * emSize;
-                return [key, pxSize];
-            }
-            if (value.search('pt') !== -1) {
-                var _pxSize = parseFloat(value.replace('pt', '')) * ptSize;
-                return [key, _pxSize];
-            }
-            // See if we can convert a 20px to a 20 automagically
-            var numericValue = parseFloat(value.replace('px', ''));
-            if (key !== 'fontWeight' && !isNaN(numericValue)) {
-                if (styleProps.indexOf(key) !== -1) {
-                    return [key, numericValue];
-                }
-            }
-            if (key === 'fontSize') {
-                return mapAbsoluteFontSize(key, value);
-            }
-        }
+      value = value.replace('!important', ''); // See if we can use the percentage directly
+
+      if (value.search('%') !== -1 && PERC_SUPPORTED_STYLES.indexOf(key) !== -1) {
         return [key, value];
-    }).filter(function (prop) {
-        return prop !== undefined;
-    }).reduce(function (acc, _ref7) {
-        var _ref8 = slicedToArray(_ref7, 2),
-            key = _ref8[0],
-            value = _ref8[1];
+      }
 
-        acc[key] = value;
-        return acc;
-    }, {});
+      if (value.search('em') !== -1) {
+        var pxSize = parseFloat(value.replace('em', '')) * emSize;
+        return [key, pxSize];
+      }
+
+      if (value.search('pt') !== -1) {
+        var _pxSize = parseFloat(value.replace('pt', '')) * ptSize;
+
+        return [key, _pxSize];
+      } // See if we can convert a 20px to a 20 automagically
+
+
+      var numericValue = parseFloat(value.replace('px', ''));
+
+      if (key !== 'fontWeight' && !isNaN(numericValue)) {
+        if (styleProps.indexOf(key) !== -1) {
+          return [key, numericValue];
+        }
+      }
+
+      if (key === 'fontSize') {
+        return mapAbsoluteFontSize(key, value);
+      }
+    }
+
+    return [key, value];
+  }).filter(function (prop) {
+    return prop !== undefined;
+  }).reduce(function (acc, _ref7) {
+    var _ref8 = _slicedToArray(_ref7, 2),
+        key = _ref8[0],
+        value = _ref8[1];
+
+    acc[key] = value;
+    return acc;
+  }, {});
 }
-
 /**
 * @param {string} key: the key of style
 * @param {string} value: the value of style
 * @return {array}
 */
-function mapAbsoluteFontSize(key, value) {
-    var fontSize = value;
-    if (ABSOLUTE_FONT_SIZE.hasOwnProperty(value)) {
-        fontSize = ABSOLUTE_FONT_SIZE[value];
-    }
-    return [key, fontSize];
-}
 
+
+function mapAbsoluteFontSize(key, value) {
+  var fontSize = value;
+
+  if (ABSOLUTE_FONT_SIZE.hasOwnProperty(value)) {
+    fontSize = ABSOLUTE_FONT_SIZE[value];
+  }
+
+  return [key, fontSize];
+}
 /**
 * @param str: the css style string
 * @param styleset=STYLESETS.TEXT: the styleset to convert the styles against
 * @return a react native style object
 */
-function cssStringToRNStyle(str) {
-    var styleset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : STYLESETS.TEXT;
-    var options = arguments[2];
 
-    return cssToRNStyle(cssStringToObject(str), styleset, options);
+
+function cssStringToRNStyle(str) {
+  var styleset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : STYLESETS.TEXT;
+  var options = arguments.length > 2 ? arguments[2] : undefined;
+  return cssToRNStyle(cssStringToObject(str), styleset, options);
 }
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -590,7 +641,8 @@ var decode = {
 };
 
 var decode$1 = /*#__PURE__*/Object.freeze({
-  default: decode
+  __proto__: null,
+  'default': decode
 });
 
 var require$$0 = getCjsExportFromNamespace(decode$1);
@@ -4876,6 +4928,7 @@ var entities = {
 };
 
 var entities$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   Aacute: Aacute,
   aacute: aacute,
   Abreve: Abreve,
@@ -6999,7 +7052,7 @@ var entities$1 = /*#__PURE__*/Object.freeze({
   zscr: zscr,
   zwj: zwj,
   zwnj: zwnj,
-  default: entities
+  'default': entities
 });
 
 var Aacute$1 = "Á";
@@ -7218,6 +7271,7 @@ var legacy = {
 };
 
 var legacy$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   Aacute: Aacute$1,
   aacute: aacute$1,
   Acirc: Acirc$1,
@@ -7324,7 +7378,7 @@ var legacy$1 = /*#__PURE__*/Object.freeze({
   yacute: yacute$1,
   yen: yen$1,
   yuml: yuml$1,
-  default: legacy
+  'default': legacy
 });
 
 var amp$2 = "&";
@@ -7341,12 +7395,13 @@ var xml = {
 };
 
 var xml$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   amp: amp$2,
   apos: apos$1,
   gt: gt$2,
   lt: lt$2,
   quot: quot$2,
-  default: xml
+  'default': xml
 });
 
 var require$$1 = getCjsExportFromNamespace(entities$1);
@@ -8232,7 +8287,7 @@ var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || func
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Tokenizer_1$$1 = __importDefault(Tokenizer_1);
+var Tokenizer_1$1 = __importDefault(Tokenizer_1);
 
 var formTags = new Set([
     "input",
@@ -8360,7 +8415,7 @@ var Parser = /** @class */ (function (_super) {
             "lowerCaseAttributeNames" in _this._options
                 ? !!_this._options.lowerCaseAttributeNames
                 : !_this._options.xmlMode;
-        _this._tokenizer = new (_this._options.Tokenizer || Tokenizer_1$$1.default)(_this._options, _this);
+        _this._tokenizer = new (_this._options.Tokenizer || Tokenizer_1$1.default)(_this._options, _this);
         if (_this._cbs.onparserinit)
             _this._cbs.onparserinit(_this);
         return _this;
@@ -8892,9 +8947,9 @@ var DomHandler = /** @class */ (function () {
             if (normalize) {
                 data = data.replace(reWhitespace, " ");
             }
-            var node$$1 = new node.DataNode("text" /* Text */, data);
-            this.addNode(node$$1);
-            this._lastNode = node$$1;
+            var node$1 = new node.DataNode("text" /* Text */, data);
+            this.addNode(node$1);
+            this._lastNode = node$1;
         }
     };
     DomHandler.prototype.oncomment = function (data) {
@@ -8902,26 +8957,26 @@ var DomHandler = /** @class */ (function () {
             this._lastNode.data += data;
             return;
         }
-        var node$$1 = new node.DataNode("comment" /* Comment */, data);
-        this.addNode(node$$1);
-        this._lastNode = node$$1;
+        var node$1 = new node.DataNode("comment" /* Comment */, data);
+        this.addNode(node$1);
+        this._lastNode = node$1;
     };
     DomHandler.prototype.oncommentend = function () {
         this._lastNode = null;
     };
     DomHandler.prototype.oncdatastart = function () {
         var text = new node.DataNode("text" /* Text */, "");
-        var node$$1 = new node.NodeWithChildren("cdata" /* CDATA */, [text]);
-        this.addNode(node$$1);
-        text.parent = node$$1;
+        var node$1 = new node.NodeWithChildren("cdata" /* CDATA */, [text]);
+        this.addNode(node$1);
+        text.parent = node$1;
         this._lastNode = text;
     };
     DomHandler.prototype.oncdataend = function () {
         this._lastNode = null;
     };
     DomHandler.prototype.onprocessinginstruction = function (name, data) {
-        var node$$1 = new node.ProcessingInstruction(name, data);
-        this.addNode(node$$1);
+        var node$1 = new node.ProcessingInstruction(name, data);
+        this.addNode(node$1);
     };
     DomHandler.prototype.handleCallback = function (error) {
         if (typeof this._callback === "function") {
@@ -8931,31 +8986,31 @@ var DomHandler = /** @class */ (function () {
             throw error;
         }
     };
-    DomHandler.prototype.addNode = function (node$$1) {
+    DomHandler.prototype.addNode = function (node) {
         var parent = this._tagStack[this._tagStack.length - 1];
         var siblings = parent ? parent.children : this.dom;
         var previousSibling = siblings[siblings.length - 1];
         if (this._parser) {
             if (this._options.withStartIndices) {
-                node$$1.startIndex = this._parser.startIndex;
+                node.startIndex = this._parser.startIndex;
             }
             if (this._options.withEndIndices) {
-                node$$1.endIndex = this._parser.endIndex;
+                node.endIndex = this._parser.endIndex;
             }
         }
-        siblings.push(node$$1);
+        siblings.push(node);
         if (previousSibling) {
-            node$$1.prev = previousSibling;
-            previousSibling.next = node$$1;
+            node.prev = previousSibling;
+            previousSibling.next = node;
         }
         if (parent) {
-            node$$1.parent = parent;
+            node.parent = parent;
         }
         this._lastNode = null;
     };
-    DomHandler.prototype.addDataNode = function (node$$1) {
-        this.addNode(node$$1);
-        this._lastNode = node$$1;
+    DomHandler.prototype.addDataNode = function (node) {
+        this.addNode(node);
+        this._lastNode = node;
     };
     return DomHandler;
 }());
@@ -9184,10 +9239,10 @@ function decodeStrict(data, level) {
     return (!level || level <= 0 ? decode$2.decodeXML : decode$2.decodeHTMLStrict)(data);
 }
 exports.decodeStrict = decodeStrict;
-function encode$$1(data, level) {
+function encode$1(data, level) {
     return (!level || level <= 0 ? encode.encodeXML : encode.encodeHTML)(data);
 }
-exports.encode = encode$$1;
+exports.encode = encode$1;
 var encode_2 = encode;
 exports.encodeXML = encode_2.encodeXML;
 exports.encodeHTML = encode_2.encodeHTML;
@@ -9331,9 +9386,10 @@ var foreignNames = {
 };
 
 var foreignNames$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   elementNames: elementNames,
   attributeNames: attributeNames,
-  default: foreignNames
+  'default': foreignNames
 });
 
 var foreignNames$2 = getCjsExportFromNamespace(foreignNames$1);
@@ -9446,7 +9502,7 @@ var render = (module.exports = function(dom, opts) {
   return output;
 });
 
-const foreignModeIntegrationPoints = [
+var foreignModeIntegrationPoints = [
   'mi',
   'mo',
   'mn',
@@ -10341,7 +10397,7 @@ var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || func
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var MultiplexHandler_1$$1 = __importDefault(MultiplexHandler_1);
+var MultiplexHandler_1$1 = __importDefault(MultiplexHandler_1);
 var CollectingHandler = /** @class */ (function (_super) {
     __extends(CollectingHandler, _super);
     function CollectingHandler(cbs) {
@@ -10380,7 +10436,7 @@ var CollectingHandler = /** @class */ (function (_super) {
         }
     };
     return CollectingHandler;
-}(MultiplexHandler_1$$1.default));
+}(MultiplexHandler_1$1.default));
 exports.CollectingHandler = CollectingHandler;
 });
 
@@ -10461,8 +10517,8 @@ __export(WritableStream_1);
 __export(CollectingHandler_1);
 var DomUtils = __importStar(lib$3);
 exports.DomUtils = DomUtils;
-var FeedHandler_1$$1 = FeedHandler_1;
-exports.RssHandler = FeedHandler_1$$1.FeedHandler;
+var FeedHandler_1$1 = FeedHandler_1;
+exports.RssHandler = FeedHandler_1$1.FeedHandler;
 });
 
 var htmlparser2 = unwrapExports(lib$4);
@@ -10479,349 +10535,383 @@ var lib_10$1 = lib$4.RssHandler;
 
 // This files provides compatibility without tree platform.
 
-var HTMLImage = function (_PureComponent) {
-    inherits(HTMLImage, _PureComponent);
+var HTMLImage =
+/*#__PURE__*/
+function (_PureComponent) {
+  _inherits(HTMLImage, _PureComponent);
 
-    function HTMLImage(props) {
-        classCallCheck(this, HTMLImage);
+  function HTMLImage(props) {
+    var _this;
 
-        var _this = possibleConstructorReturn(this, (HTMLImage.__proto__ || Object.getPrototypeOf(HTMLImage)).call(this, props));
+    _classCallCheck(this, HTMLImage);
 
-        _this.state = {
-            width: props.imagesInitialDimensions.width,
-            height: props.imagesInitialDimensions.height
-        };
-        return _this;
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(HTMLImage).call(this, props));
+    _this.state = {
+      width: props.imagesInitialDimensions.width,
+      height: props.imagesInitialDimensions.height
+    };
+    return _this;
+  }
+
+  _createClass(HTMLImage, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.getImageSize();
+      this.mounted = true;
     }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.mounted = false;
+    }
+  }, {
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      this.getImageSize(nextProps);
+    }
+  }, {
+    key: "getDimensionsFromStyle",
+    value: function getDimensionsFromStyle(style, height, width) {
+      var styleWidth;
+      var styleHeight;
 
-    createClass(HTMLImage, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.getImageSize();
-            this.mounted = true;
+      if (height) {
+        styleHeight = height;
+      }
+
+      if (width) {
+        styleWidth = width;
+      }
+
+      if (Array.isArray(style)) {
+        style.forEach(function (styles) {
+          if (!width && styles['width']) {
+            styleWidth = styles['width'];
+          }
+
+          if (!height && styles['height']) {
+            styleHeight = styles['height'];
+          }
+        });
+      } else {
+        if (!width && style['width']) {
+          styleWidth = style['width'];
         }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            this.mounted = false;
+
+        if (!height && style['height']) {
+          styleHeight = style['height'];
         }
-    }, {
-        key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps(nextProps) {
-            this.getImageSize(nextProps);
+      }
+
+      return {
+        styleWidth: styleWidth,
+        styleHeight: styleHeight
+      };
+    }
+  }, {
+    key: "getImageSize",
+    value: function getImageSize() {
+      var _this2 = this;
+
+      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+      var source = props.source,
+          imagesMaxWidth = props.imagesMaxWidth,
+          style = props.style,
+          height = props.height,
+          width = props.width;
+
+      var _this$getDimensionsFr = this.getDimensionsFromStyle(style, height, width),
+          styleWidth = _this$getDimensionsFr.styleWidth,
+          styleHeight = _this$getDimensionsFr.styleHeight;
+
+      if (styleWidth && styleHeight) {
+        return this.mounted && this.setState({
+          width: typeof styleWidth === 'string' && styleWidth.search('%') !== -1 ? styleWidth : parseInt(styleWidth, 10),
+          height: typeof styleHeight === 'string' && styleHeight.search('%') !== -1 ? styleHeight : parseInt(styleHeight, 10)
+        });
+      } // Fetch image dimensions only if they aren't supplied or if with or height is missing
+
+
+      reactNative.Image.getSize(source.uri, function (originalWidth, originalHeight) {
+        if (!imagesMaxWidth) {
+          return _this2.mounted && _this2.setState({
+            width: originalWidth,
+            height: originalHeight
+          });
         }
-    }, {
-        key: 'getDimensionsFromStyle',
-        value: function getDimensionsFromStyle(style, height, width) {
-            var styleWidth = void 0;
-            var styleHeight = void 0;
 
-            if (height) {
-                styleHeight = height;
-            }
-            if (width) {
-                styleWidth = width;
-            }
-            if (Array.isArray(style)) {
-                style.forEach(function (styles) {
-                    if (!width && styles['width']) {
-                        styleWidth = styles['width'];
-                    }
-                    if (!height && styles['height']) {
-                        styleHeight = styles['height'];
-                    }
-                });
-            } else {
-                if (!width && style['width']) {
-                    styleWidth = style['width'];
-                }
-                if (!height && style['height']) {
-                    styleHeight = style['height'];
-                }
-            }
-
-            return { styleWidth: styleWidth, styleHeight: styleHeight };
+        var optimalWidth = imagesMaxWidth <= originalWidth ? imagesMaxWidth : originalWidth;
+        var optimalHeight = optimalWidth * originalHeight / originalWidth;
+        _this2.mounted && _this2.setState({
+          width: optimalWidth,
+          height: optimalHeight,
+          error: false
+        });
+      }, function () {
+        _this2.mounted && _this2.setState({
+          error: true
+        });
+      });
+    }
+  }, {
+    key: "validImage",
+    value: function validImage(source, style) {
+      var props = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return React__default.createElement(reactNative.Image, _extends({
+        source: source,
+        style: [style, {
+          width: this.state.width,
+          height: this.state.height,
+          resizeMode: 'cover'
+        }]
+      }, props));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          source = _this$props.source,
+          style = _this$props.style,
+          passProps = _this$props.passProps;
+      return !this.state.error ? this.validImage(source, style, passProps) : this.errorImage;
+    }
+  }, {
+    key: "errorImage",
+    get: function get() {
+      return React__default.createElement(reactNative.View, {
+        style: {
+          width: 50,
+          height: 50,
+          borderWidth: 1,
+          borderColor: 'lightgray',
+          overflow: 'hidden',
+          justifyContent: 'center'
         }
-    }, {
-        key: 'getImageSize',
-        value: function getImageSize() {
-            var _this2 = this;
-
-            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
-            var source = props.source,
-                imagesMaxWidth = props.imagesMaxWidth,
-                style = props.style,
-                height = props.height,
-                width = props.width;
-
-            var _getDimensionsFromSty = this.getDimensionsFromStyle(style, height, width),
-                styleWidth = _getDimensionsFromSty.styleWidth,
-                styleHeight = _getDimensionsFromSty.styleHeight;
-
-            if (styleWidth && styleHeight) {
-                return this.mounted && this.setState({
-                    width: typeof styleWidth === 'string' && styleWidth.search('%') !== -1 ? styleWidth : parseInt(styleWidth, 10),
-                    height: typeof styleHeight === 'string' && styleHeight.search('%') !== -1 ? styleHeight : parseInt(styleHeight, 10)
-                });
-            }
-            // Fetch image dimensions only if they aren't supplied or if with or height is missing
-            reactNative.Image.getSize(source.uri, function (originalWidth, originalHeight) {
-                if (!imagesMaxWidth) {
-                    return _this2.mounted && _this2.setState({ width: originalWidth, height: originalHeight });
-                }
-                var optimalWidth = imagesMaxWidth <= originalWidth ? imagesMaxWidth : originalWidth;
-                var optimalHeight = optimalWidth * originalHeight / originalWidth;
-                _this2.mounted && _this2.setState({ width: optimalWidth, height: optimalHeight, error: false });
-            }, function () {
-                _this2.mounted && _this2.setState({ error: true });
-            });
+      }, this.props.alt ? React__default.createElement(reactNative.Text, {
+        style: {
+          textAlign: 'center',
+          fontStyle: 'italic'
         }
-    }, {
-        key: 'validImage',
-        value: function validImage(source, style) {
-            var props = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      }, this.props.alt) : false);
+    }
+  }]);
 
-            return React__default.createElement(reactNative.Image, _extends({
-                source: source,
-                style: [style, { width: this.state.width, height: this.state.height, resizeMode: 'cover' }]
-            }, props));
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _props = this.props,
-                source = _props.source,
-                style = _props.style,
-                passProps = _props.passProps;
-
-
-            return !this.state.error ? this.validImage(source, style, passProps) : this.errorImage;
-        }
-    }, {
-        key: 'errorImage',
-        get: function get$$1() {
-            return React__default.createElement(
-                reactNative.View,
-                { style: { width: 50, height: 50, borderWidth: 1, borderColor: 'lightgray', overflow: 'hidden', justifyContent: 'center' } },
-                this.props.alt ? React__default.createElement(
-                    reactNative.Text,
-                    { style: { textAlign: 'center', fontStyle: 'italic' } },
-                    this.props.alt
-                ) : false
-            );
-        }
-    }]);
-    return HTMLImage;
+  return HTMLImage;
 }(React.PureComponent);
 
-HTMLImage.propTypes = {
-    source: PropTypes.object.isRequired,
-    alt: PropTypes.string,
-    height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    style: reactNative.Image.propTypes.style,
-    imagesMaxWidth: PropTypes.number,
-    imagesInitialDimensions: PropTypes.shape({
-        width: PropTypes.number,
-        height: PropTypes.number
-    })
-};
-HTMLImage.defaultProps = {
-    imagesInitialDimensions: {
-        width: 100,
-        height: 100
-    }
-};
+_defineProperty(HTMLImage, "propTypes", {
+  source: PropTypes.object.isRequired,
+  alt: PropTypes.string,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  style: reactNative.Image.propTypes.style,
+  imagesMaxWidth: PropTypes.number,
+  imagesInitialDimensions: PropTypes.shape({
+    width: PropTypes.number,
+    height: PropTypes.number
+  })
+});
+
+_defineProperty(HTMLImage, "defaultProps", {
+  imagesInitialDimensions: {
+    width: 100,
+    height: 100
+  }
+});
 
 function a(htmlAttribs, children, convertedCSSStyles, passProps) {
-    var style = _constructStyles({
-        tagName: 'a',
-        htmlAttribs: htmlAttribs,
-        passProps: passProps,
-        styleSet: passProps.parentWrapper === 'Text' ? 'TEXT' : 'VIEW'
-    });
-    // !! This deconstruction needs to happen after the styles construction since
-    // the passed props might be altered by it !!
-    var parentWrapper = passProps.parentWrapper,
-        onLinkPress = passProps.onLinkPress,
-        key = passProps.key,
-        data = passProps.data;
+  var style = _constructStyles({
+    tagName: 'a',
+    htmlAttribs: htmlAttribs,
+    passProps: passProps,
+    styleSet: passProps.parentWrapper === 'Text' ? 'TEXT' : 'VIEW'
+  }); // !! This deconstruction needs to happen after the styles construction since
+  // the passed props might be altered by it !!
 
-    var onPress = function onPress(evt) {
-        return onLinkPress && htmlAttribs && htmlAttribs.href ? onLinkPress(evt, htmlAttribs.href, htmlAttribs) : undefined;
-    };
 
-    if (parentWrapper === 'Text') {
-        return React__default.createElement(
-            reactNative.Text,
-            _extends({}, passProps, { style: style, onPress: onPress, key: key }),
-            children || data
-        );
-    } else {
-        return React__default.createElement(
-            reactNative.TouchableOpacity,
-            { onPress: onPress, key: key },
-            children || data
-        );
-    }
+  var parentWrapper = passProps.parentWrapper,
+      onLinkPress = passProps.onLinkPress,
+      key = passProps.key,
+      data = passProps.data;
+
+  var onPress = function onPress(evt) {
+    return onLinkPress && htmlAttribs && htmlAttribs.href ? onLinkPress(evt, htmlAttribs.href, htmlAttribs) : undefined;
+  };
+
+  if (parentWrapper === 'Text') {
+    return React__default.createElement(reactNative.Text, _extends({}, passProps, {
+      style: style,
+      onPress: onPress,
+      key: key
+    }), children || data);
+  } else {
+    return React__default.createElement(reactNative.TouchableOpacity, {
+      onPress: onPress,
+      key: key
+    }, children || data);
+  }
 }
-
 function img(htmlAttribs, children, convertedCSSStyles) {
-    var passProps = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var passProps = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
-    if (!htmlAttribs.src) {
-        return false;
+  if (!htmlAttribs.src) {
+    return false;
+  }
+
+  var style = _constructStyles({
+    tagName: 'img',
+    htmlAttribs: htmlAttribs,
+    passProps: passProps,
+    styleSet: 'IMAGE'
+  });
+
+  var src = htmlAttribs.src,
+      alt = htmlAttribs.alt,
+      width = htmlAttribs.width,
+      height = htmlAttribs.height;
+  return React__default.createElement(HTMLImage, _extends({
+    source: {
+      uri: src
+    },
+    alt: alt,
+    width: width,
+    height: height,
+    style: style
+  }, passProps));
+}
+function ul(htmlAttribs, children, convertedCSSStyles) {
+  var passProps = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+
+  var style = _constructStyles({
+    tagName: 'ul',
+    htmlAttribs: htmlAttribs,
+    passProps: passProps,
+    styleSet: 'VIEW'
+  });
+
+  var allowFontScaling = passProps.allowFontScaling,
+      rawChildren = passProps.rawChildren,
+      nodeIndex = passProps.nodeIndex,
+      key = passProps.key,
+      baseFontStyle = passProps.baseFontStyle,
+      listsPrefixesRenderers = passProps.listsPrefixesRenderers;
+  var baseFontSize = baseFontStyle.fontSize || 14;
+  children = children && children.map(function (child, index) {
+    var rawChild = rawChildren[index];
+    var prefix = false;
+    var rendererArgs = [htmlAttribs, children, convertedCSSStyles, _objectSpread2({}, passProps, {
+      index: index
+    })];
+
+    if (rawChild) {
+      if (rawChild.parentTag === 'ul' && rawChild.tagName === 'li') {
+        prefix = listsPrefixesRenderers && listsPrefixesRenderers.ul ? listsPrefixesRenderers.ul.apply(listsPrefixesRenderers, rendererArgs) : React__default.createElement(reactNative.View, {
+          style: {
+            marginRight: 10,
+            width: baseFontSize / 2.8,
+            height: baseFontSize / 2.8,
+            marginTop: baseFontSize / 2,
+            borderRadius: baseFontSize / 2.8,
+            backgroundColor: 'black'
+          }
+        });
+      } else if (rawChild.parentTag === 'ol' && rawChild.tagName === 'li') {
+        prefix = listsPrefixesRenderers && listsPrefixesRenderers.ol ? listsPrefixesRenderers.ol.apply(listsPrefixesRenderers, rendererArgs) : React__default.createElement(reactNative.Text, {
+          allowFontScaling: allowFontScaling,
+          style: {
+            marginRight: 5,
+            fontSize: baseFontSize
+          }
+        }, index + 1, ")");
+      }
     }
 
-    var style = _constructStyles({
-        tagName: 'img',
-        htmlAttribs: htmlAttribs,
-        passProps: passProps,
-        styleSet: 'IMAGE'
-    });
-    var src = htmlAttribs.src,
-        alt = htmlAttribs.alt,
-        width = htmlAttribs.width,
-        height = htmlAttribs.height;
-
-    return React__default.createElement(HTMLImage, _extends({
-        source: { uri: src },
-        alt: alt,
-        width: width,
-        height: height,
-        style: style
-    }, passProps));
-}
-
-function ul(htmlAttribs, children, convertedCSSStyles) {
-    var passProps = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-
-    var style = _constructStyles({
-        tagName: 'ul',
-        htmlAttribs: htmlAttribs,
-        passProps: passProps,
-        styleSet: 'VIEW'
-    });
-    var allowFontScaling = passProps.allowFontScaling,
-        rawChildren = passProps.rawChildren,
-        nodeIndex = passProps.nodeIndex,
-        key = passProps.key,
-        baseFontStyle = passProps.baseFontStyle,
-        listsPrefixesRenderers = passProps.listsPrefixesRenderers;
-
-    var baseFontSize = baseFontStyle.fontSize || 14;
-
-    children = children && children.map(function (child, index) {
-        var rawChild = rawChildren[index];
-        var prefix = false;
-        var rendererArgs = [htmlAttribs, children, convertedCSSStyles, _extends({}, passProps, {
-            index: index
-        })];
-
-        if (rawChild) {
-            if (rawChild.parentTag === 'ul' && rawChild.tagName === 'li') {
-                prefix = listsPrefixesRenderers && listsPrefixesRenderers.ul ? listsPrefixesRenderers.ul.apply(listsPrefixesRenderers, rendererArgs) : React__default.createElement(reactNative.View, { style: {
-                        marginRight: 10,
-                        width: baseFontSize / 2.8,
-                        height: baseFontSize / 2.8,
-                        marginTop: baseFontSize / 2,
-                        borderRadius: baseFontSize / 2.8,
-                        backgroundColor: 'black'
-                    } });
-            } else if (rawChild.parentTag === 'ol' && rawChild.tagName === 'li') {
-                prefix = listsPrefixesRenderers && listsPrefixesRenderers.ol ? listsPrefixesRenderers.ol.apply(listsPrefixesRenderers, rendererArgs) : React__default.createElement(
-                    reactNative.Text,
-                    { allowFontScaling: allowFontScaling, style: { marginRight: 5, fontSize: baseFontSize } },
-                    index + 1,
-                    ')'
-                );
-            }
-        }
-        return React__default.createElement(
-            reactNative.View,
-            { key: 'list-' + nodeIndex + '-' + index + '-' + key, style: { flexDirection: 'row', marginBottom: 10 } },
-            prefix,
-            React__default.createElement(
-                reactNative.View,
-                { style: { flex: 1 } },
-                child
-            )
-        );
-    });
-    return React__default.createElement(
-        reactNative.View,
-        { style: style, key: key },
-        children
-    );
+    return React__default.createElement(reactNative.View, {
+      key: "list-".concat(nodeIndex, "-").concat(index, "-").concat(key),
+      style: {
+        flexDirection: 'row',
+        marginBottom: 10
+      }
+    }, prefix, React__default.createElement(reactNative.View, {
+      style: {
+        flex: 1
+      }
+    }, child));
+  });
+  return React__default.createElement(reactNative.View, {
+    style: style,
+    key: key
+  }, children);
 }
 var ol = ul;
-
 function iframe(htmlAttribs, children, convertedCSSStyles, passProps) {
-    var staticContentMaxWidth = passProps.staticContentMaxWidth,
-        tagsStyles = passProps.tagsStyles,
-        classesStyles = passProps.classesStyles;
+  var staticContentMaxWidth = passProps.staticContentMaxWidth,
+      tagsStyles = passProps.tagsStyles,
+      classesStyles = passProps.classesStyles;
+  var tagStyleHeight = tagsStyles.iframe && tagsStyles.iframe.height;
+  var tagStyleWidth = tagsStyles.iframe && tagsStyles.iframe.width;
 
+  var classStyles = _getElementClassStyles(htmlAttribs, classesStyles);
 
-    var tagStyleHeight = tagsStyles.iframe && tagsStyles.iframe.height;
-    var tagStyleWidth = tagsStyles.iframe && tagsStyles.iframe.width;
+  var classStyleWidth = classStyles.width;
+  var classStyleHeight = classStyles.height;
+  var attrHeight = htmlAttribs.height ? parseInt(htmlAttribs.height) : false;
+  var attrWidth = htmlAttribs.width ? parseInt(htmlAttribs.width) : false;
+  var height = attrHeight || classStyleHeight || tagStyleHeight || 200;
+  var width = attrWidth || classStyleWidth || tagStyleWidth || staticContentMaxWidth;
 
-    var classStyles = _getElementClassStyles(htmlAttribs, classesStyles);
-    var classStyleWidth = classStyles.width;
-    var classStyleHeight = classStyles.height;
+  var style = _constructStyles({
+    tagName: 'iframe',
+    htmlAttribs: htmlAttribs,
+    passProps: passProps,
+    styleSet: 'VIEW',
+    additionalStyles: [{
+      height: height,
+      width: width
+    }]
+  });
 
-    var attrHeight = htmlAttribs.height ? parseInt(htmlAttribs.height) : false;
-    var attrWidth = htmlAttribs.width ? parseInt(htmlAttribs.width) : false;
-
-    var height = attrHeight || classStyleHeight || tagStyleHeight || 200;
-    var width = attrWidth || classStyleWidth || tagStyleWidth || staticContentMaxWidth;
-
-    var style = _constructStyles({
-        tagName: 'iframe',
-        htmlAttribs: htmlAttribs,
-        passProps: passProps,
-        styleSet: 'VIEW',
-        additionalStyles: [{ height: height, width: width }]
-    });
-
-    var source = htmlAttribs.srcdoc ? { html: htmlAttribs.srcdoc } : { uri: htmlAttribs.src };
-
-    return React__default.createElement(reactNative.WebView, { key: passProps.key, source: source, style: style });
+  var source = htmlAttribs.srcdoc ? {
+    html: htmlAttribs.srcdoc
+  } : {
+    uri: htmlAttribs.src
+  };
+  return React__default.createElement(reactNative.WebView, {
+    key: passProps.key,
+    source: source,
+    style: style
+  });
 }
-
 function pre$1(htlmAttribs, children, convertedCSSStyles, passProps) {
-    return React__default.createElement(
-        reactNative.Text,
-        {
-            key: passProps.key,
-            style: { fontFamily: reactNative.Platform.OS === 'android' ? 'monospace' : 'Menlo' } },
-        children
-    );
+  return React__default.createElement(reactNative.Text, {
+    key: passProps.key,
+    style: {
+      fontFamily: reactNative.Platform.OS === 'android' ? 'monospace' : 'Menlo'
+    }
+  }, children);
 }
-
 function br(htlmAttribs, children, convertedCSSStyles, passProps) {
-    return React__default.createElement(
-        reactNative.Text,
-        {
-            allowFontScaling: passProps.allowFontScaling,
-            style: { height: 1.2 * passProps.emSize, flex: 1 },
-            key: passProps.key
-        },
-        "\n"
-    );
+  return React__default.createElement(reactNative.Text, {
+    allowFontScaling: passProps.allowFontScaling,
+    style: {
+      height: 1.2 * passProps.emSize,
+      flex: 1
+    },
+    key: passProps.key
+  }, "\n");
 }
-
 function textwrapper(htmlAttribs, children, convertedCSSStyles, _ref) {
-    var allowFontScaling = _ref.allowFontScaling,
-        key = _ref.key;
-
-    return React__default.createElement(
-        reactNative.Text,
-        { allowFontScaling: allowFontScaling, key: key, style: convertedCSSStyles },
-        children
-    );
+  var allowFontScaling = _ref.allowFontScaling,
+      key = _ref.key;
+  return React__default.createElement(reactNative.Text, {
+    allowFontScaling: allowFontScaling,
+    key: key,
+    style: convertedCSSStyles
+  }, children);
 }
 
 var HTMLRenderers = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   a: a,
   img: img,
   ul: ul,
@@ -10832,619 +10922,678 @@ var HTMLRenderers = /*#__PURE__*/Object.freeze({
   textwrapper: textwrapper
 });
 
-var HTML = function (_PureComponent) {
-    inherits(HTML, _PureComponent);
+var HTML =
+/*#__PURE__*/
+function (_PureComponent) {
+  _inherits(HTML, _PureComponent);
 
-    function HTML(props) {
-        classCallCheck(this, HTML);
+  function HTML(props) {
+    var _this;
 
-        var _this = possibleConstructorReturn(this, (HTML.__proto__ || Object.getPrototypeOf(HTML)).call(this, props));
+    _classCallCheck(this, HTML);
 
-        _this.state = {};
-        _this.renderers = _extends({}, HTMLRenderers, _this.props.renderers || {});
-        return _this;
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(HTML).call(this, props));
+    _this.state = {};
+    _this.renderers = _objectSpread2({}, HTMLRenderers, {}, _this.props.renderers || {});
+    return _this;
+  }
+
+  _createClass(HTML, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      this.generateDefaultStyles();
     }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.registerDOM();
+    }
+  }, {
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      var _this$props = this.props,
+          html = _this$props.html,
+          uri = _this$props.uri,
+          renderers = _this$props.renderers;
+      this.generateDefaultStyles(nextProps.baseFontStyle);
 
-    createClass(HTML, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            this.generateDefaultStyles();
+      if (renderers !== nextProps.renderers) {
+        this.renderers = _objectSpread2({}, HTMLRenderers, {}, nextProps.renderers || {});
+      }
+
+      if (html !== nextProps.html || uri !== nextProps.uri) {
+        // If the source changed, register the new HTML and parse it
+        this.registerDOM(nextProps);
+      } else {
+        // If it didn't, let's just parse the current DOM and re-render the nodes
+        // to compute potential style changes
+        this.parseDOM(this.state.dom, nextProps);
+      }
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (this.state.dom !== prevState.dom) {
+        this.parseDOM(this.state.dom);
+      }
+    }
+  }, {
+    key: "registerDOM",
+    value: function registerDOM() {
+      var props,
+          html,
+          uri,
+          response,
+          _args = arguments;
+      return regeneratorRuntime.async(function registerDOM$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              props = _args.length > 0 && _args[0] !== undefined ? _args[0] : this.props;
+              html = props.html, uri = props.uri;
+
+              if (!html) {
+                _context.next = 7;
+                break;
+              }
+
+              this.setState({
+                dom: html,
+                loadingRemoteURL: false,
+                errorLoadingRemoteURL: false
+              });
+              _context.next = 30;
+              break;
+
+            case 7:
+              if (!props.uri) {
+                _context.next = 29;
+                break;
+              }
+
+              _context.prev = 8;
+              _context.prev = 9;
+              this.setState({
+                loadingRemoteURL: true,
+                errorLoadingRemoteURL: false
+              });
+              _context.next = 13;
+              return regeneratorRuntime.awrap(fetch(uri));
+
+            case 13:
+              response = _context.sent;
+              this.setState({
+                dom: response._bodyText,
+                loadingRemoteURL: false
+              });
+              _context.next = 21;
+              break;
+
+            case 17:
+              _context.prev = 17;
+              _context.t0 = _context["catch"](9);
+              console.warn(_context.t0);
+              this.setState({
+                errorLoadingRemoteURL: true,
+                loadingRemoteURL: false
+              });
+
+            case 21:
+              _context.next = 27;
+              break;
+
+            case 23:
+              _context.prev = 23;
+              _context.t1 = _context["catch"](8);
+              console.warn('react-native-render-html', "Couldn't fetch remote HTML from uri : ".concat(uri));
+              return _context.abrupt("return", false);
+
+            case 27:
+              _context.next = 30;
+              break;
+
+            case 29:
+              console.warn('react-native-render-html', 'Please provide the html or uri prop.');
+
+            case 30:
+            case "end":
+              return _context.stop();
+          }
         }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.registerDOM();
+      }, null, this, [[8, 23], [9, 17]]);
+    }
+  }, {
+    key: "parseDOM",
+    value: function parseDOM(dom) {
+      var _this2 = this;
+
+      var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.props;
+      var _this$props2 = this.props,
+          decodeEntities = _this$props2.decodeEntities,
+          debug = _this$props2.debug,
+          onParsed = _this$props2.onParsed;
+      var parser = new htmlparser2.Parser(new htmlparser2.DomHandler(function (_err, dom) {
+        var RNElements = _this2.mapDOMNodesTORNElements(dom, false, props);
+
+        if (onParsed) {
+          var alteredRNElements = onParsed(dom, RNElements);
+
+          if (alteredRNElements) {
+            RNElements = alteredRNElements;
+          }
         }
-    }, {
-        key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps(nextProps) {
-            var _props = this.props,
-                html = _props.html,
-                uri = _props.uri,
-                renderers = _props.renderers;
+
+        _this2.setState({
+          RNNodes: _this2.renderRNElements(RNElements, 'root', 0, props)
+        });
+
+        if (debug) {
+          console.log('DOMNodes from htmlparser2', dom);
+          console.log('RNElements from render-html', RNElements);
+        }
+      }), {
+        decodeEntities: decodeEntities
+      });
+      parser.write(dom);
+      parser.done();
+    }
+  }, {
+    key: "generateDefaultStyles",
+    value: function generateDefaultStyles() {
+      var baseFontStyle = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props.baseFontStyle;
+      this.defaultBlockStyles = generateDefaultBlockStyles(baseFontStyle.fontSize || 14);
+      this.defaultTextStyles = generateDefaultTextStyles(baseFontStyle.fontSize || 14);
+    }
+    /**
+     * Loop on children and return whether if their parent needs to be a <View>
+     * @param {any} children
+     * @returns {boolean}
+     * @memberof HTML
+     */
+
+  }, {
+    key: "childrenNeedAView",
+    value: function childrenNeedAView(children) {
+      for (var i = 0; i < children.length; i++) {
+        if (children[i].wrapper === 'View') {
+          // If we find at least one View, it has to be nested in one
+          return true;
+        }
+      } // We didn't find a single view, it can be wrapped in a Text
 
 
-            this.generateDefaultStyles(nextProps.baseFontStyle);
-            if (renderers !== nextProps.renderers) {
-                this.renderers = _extends({}, HTMLRenderers, nextProps.renderers || {});
+      return false;
+    }
+  }, {
+    key: "wrapperHasTextChild",
+    value: function wrapperHasTextChild(children) {
+      for (var i = 0; i < children.length; i++) {
+        if (children[i].wrapper === 'Text') {
+          return true;
+        }
+      }
+
+      return false;
+    }
+    /**
+     * Loops on children an find texts that need to be wrapped so we don't render line breaks
+     * The wrapper can either be a <p> when it should be a paragraph, or a custom tag named
+     * "textwrapper", which renders a plain <Text> component.
+     * @param {any} children
+     * @returns {array}
+     * @memberof HTML
+     */
+
+  }, {
+    key: "associateRawTexts",
+    value: function associateRawTexts(children) {
+      for (var i = 0; i < children.length; i++) {
+        var child = children[i];
+
+        if (child.wrapper === 'Text' && TEXT_TAGS_IGNORING_ASSOCIATION.indexOf(child.tagName) === -1 && children.length > 1 && (!child.parent || TEXT_TAGS_IGNORING_ASSOCIATION.indexOf(child.parent.name) === -1)) {
+          // Texts outside <p> or not <p> themselves (with siblings)
+          var wrappedTexts = [];
+
+          for (var j = i; j < children.length; j++) {
+            // Loop on its next siblings and store them in an array
+            // until we encounter a block or a <p>
+            var nextSibling = children[j];
+
+            if (nextSibling.wrapper !== 'Text' || TEXT_TAGS_IGNORING_ASSOCIATION.indexOf(nextSibling.tagName) !== -1) {
+              break;
             }
-            if (html !== nextProps.html || uri !== nextProps.uri) {
-                // If the source changed, register the new HTML and parse it
-                this.registerDOM(nextProps);
-            } else {
-                // If it didn't, let's just parse the current DOM and re-render the nodes
-                // to compute potential style changes
-                this.parseDOM(this.state.dom, nextProps);
-            }
+
+            wrappedTexts.push(nextSibling); // Remove the child that has been nested
+
+            children[j] = false;
+          } // Replace the raw text with a <p> that has wrappedTexts as its children
+
+
+          if (wrappedTexts.length) {
+            children[i] = {
+              attribs: {},
+              children: wrappedTexts,
+              nodeIndex: i,
+              parent: child.parent,
+              parentTag: child.parentTag,
+              tagName: 'textwrapper',
+              wrapper: 'Text'
+            };
+          }
         }
-    }, {
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate(prevProps, prevState) {
-            if (this.state.dom !== prevState.dom) {
-                this.parseDOM(this.state.dom);
-            }
-        }
-    }, {
-        key: 'registerDOM',
-        value: function () {
-            var _ref = asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-                var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
-                var html, uri, response;
-                return regeneratorRuntime.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                html = props.html, uri = props.uri;
+      }
 
-                                if (!html) {
-                                    _context.next = 5;
-                                    break;
-                                }
+      return children.filter(function (parsedNode) {
+        return parsedNode !== false && parsedNode !== undefined;
+      });
+    }
+    /**
+     * Maps the DOM nodes parsed by htmlparser2 into a simple structure that will be easy to render with
+     * native components. It removes ignored tags, chooses the right wrapper for each set of children
+     * to ensure we're not wrapping views inside texts and improves the structure recursively
+     * to prevent erratic rendering.
+     * @param {array} DOMNodes
+     * @param {boolean} [parentTag=false]
+     * @returns
+     * @memberof HTML
+     */
 
-                                this.setState({ dom: html, loadingRemoteURL: false, errorLoadingRemoteURL: false });
-                                _context.next = 28;
-                                break;
+  }, {
+    key: "mapDOMNodesTORNElements",
+    value: function mapDOMNodesTORNElements(DOMNodes) {
+      var _this3 = this;
 
-                            case 5:
-                                if (!props.uri) {
-                                    _context.next = 27;
-                                    break;
-                                }
+      var parentTag = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var props = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.props;
+      var ignoreNodesFunction = props.ignoreNodesFunction,
+          ignoredTags = props.ignoredTags,
+          alterNode = props.alterNode,
+          alterData = props.alterData,
+          alterChildren = props.alterChildren,
+          tagsStyles = props.tagsStyles,
+          classesStyles = props.classesStyles;
+      var RNElements = DOMNodes.map(function (node, nodeIndex) {
+        var _node = node,
+            children = _node.children,
+            data = _node.data;
 
-                                _context.prev = 6;
-                                _context.prev = 7;
-
-                                this.setState({ loadingRemoteURL: true, errorLoadingRemoteURL: false });
-                                _context.next = 11;
-                                return fetch(uri);
-
-                            case 11:
-                                response = _context.sent;
-
-                                this.setState({ dom: response._bodyText, loadingRemoteURL: false });
-                                _context.next = 19;
-                                break;
-
-                            case 15:
-                                _context.prev = 15;
-                                _context.t0 = _context['catch'](7);
-
-                                console.warn(_context.t0);
-                                this.setState({ errorLoadingRemoteURL: true, loadingRemoteURL: false });
-
-                            case 19:
-                                _context.next = 25;
-                                break;
-
-                            case 21:
-                                _context.prev = 21;
-                                _context.t1 = _context['catch'](6);
-
-                                console.warn('react-native-render-html', 'Couldn\'t fetch remote HTML from uri : ' + uri);
-                                return _context.abrupt('return', false);
-
-                            case 25:
-                                _context.next = 28;
-                                break;
-
-                            case 27:
-                                console.warn('react-native-render-html', 'Please provide the html or uri prop.');
-
-                            case 28:
-                            case 'end':
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this, [[6, 21], [7, 15]]);
-            }));
-
-            function registerDOM() {
-                return _ref.apply(this, arguments);
-            }
-
-            return registerDOM;
-        }()
-    }, {
-        key: 'parseDOM',
-        value: function parseDOM(dom) {
-            var _this2 = this;
-
-            var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.props;
-            var _props2 = this.props,
-                decodeEntities = _props2.decodeEntities,
-                debug = _props2.debug,
-                onParsed = _props2.onParsed;
-
-            var parser = new htmlparser2.Parser(new htmlparser2.DomHandler(function (_err, dom) {
-                var RNElements = _this2.mapDOMNodesTORNElements(dom, false, props);
-                if (onParsed) {
-                    var alteredRNElements = onParsed(dom, RNElements);
-                    if (alteredRNElements) {
-                        RNElements = alteredRNElements;
-                    }
-                }
-                _this2.setState({ RNNodes: _this2.renderRNElements(RNElements, 'root', 0, props) });
-                if (debug) {
-                    console.log('DOMNodes from htmlparser2', dom);
-                    console.log('RNElements from render-html', RNElements);
-                }
-            }), { decodeEntities: decodeEntities });
-            parser.write(dom);
-            parser.done();
-        }
-    }, {
-        key: 'generateDefaultStyles',
-        value: function generateDefaultStyles() {
-            var baseFontStyle = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props.baseFontStyle;
-
-            this.defaultBlockStyles = generateDefaultBlockStyles(baseFontStyle.fontSize || 14);
-            this.defaultTextStyles = generateDefaultTextStyles(baseFontStyle.fontSize || 14);
+        if (ignoreNodesFunction && ignoreNodesFunction(node, parentTag) === true) {
+          return false;
         }
 
-        /**
-         * Loop on children and return whether if their parent needs to be a <View>
-         * @param {any} children
-         * @returns {boolean}
-         * @memberof HTML
-         */
+        if (ignoredTags.map(function (tag) {
+          return tag.toLowerCase();
+        }).indexOf(node.name && node.name.toLowerCase()) !== -1) {
+          return false;
+        }
 
-    }, {
-        key: 'childrenNeedAView',
-        value: function childrenNeedAView(children) {
-            for (var i = 0; i < children.length; i++) {
-                if (children[i].wrapper === 'View') {
-                    // If we find at least one View, it has to be nested in one
-                    return true;
-                }
-            }
-            // We didn't find a single view, it can be wrapped in a Text
+        if (alterNode) {
+          var alteredNode = alterNode(node);
+          node = alteredNode || node;
+        }
+
+        var _node2 = node,
+            type = _node2.type,
+            attribs = _node2.attribs,
+            name = _node2.name,
+            parent = _node2.parent;
+
+        if (alterData && data) {
+          var alteredData = alterData(node);
+          data = alteredData || data;
+        }
+
+        if (alterChildren && children) {
+          var alteredChildren = alterChildren(node);
+          children = alteredChildren || children;
+        } // Remove whitespaces to check if it's just a blank text
+
+
+        var strippedData = data && data.replace(/\s/g, '');
+
+        if (type === 'text') {
+          if (!strippedData || !strippedData.length) {
+            // This is blank, don't render an useless additional component
             return false;
-        }
-    }, {
-        key: 'wrapperHasTextChild',
-        value: function wrapperHasTextChild(children) {
-            for (var i = 0; i < children.length; i++) {
-                if (children[i].wrapper === 'Text') {
-                    return true;
-                }
-            }
-            return false;
+          }
+
+          if (node.parent && node.parent.name && PREFORMATTED_TAGS.indexOf(node.parent.name) === -1) {
+            // Remove line breaks in non-pre-formatted tags
+            data = data.replace(/(\r\n|\n|\r)/gm, '');
+          } // Text without tags, these can be mapped to the Text wrapper
+
+
+          return {
+            wrapper: 'Text',
+            data: data,
+            attribs: attribs || {},
+            parent: parent,
+            parentTag: parent && parent.name,
+            tagName: name || 'rawtext'
+          };
         }
 
-        /**
-         * Loops on children an find texts that need to be wrapped so we don't render line breaks
-         * The wrapper can either be a <p> when it should be a paragraph, or a custom tag named
-         * "textwrapper", which renders a plain <Text> component.
-         * @param {any} children
-         * @returns {array}
-         * @memberof HTML
-         */
+        if (type === 'tag') {
+          if (children) {
+            // Recursively map all children with this method
+            children = _this3.associateRawTexts(_this3.mapDOMNodesTORNElements(children, name));
+          }
 
-    }, {
-        key: 'associateRawTexts',
-        value: function associateRawTexts(children) {
-            for (var i = 0; i < children.length; i++) {
-                var child = children[i];
-                if (child.wrapper === 'Text' && TEXT_TAGS_IGNORING_ASSOCIATION.indexOf(child.tagName) === -1 && children.length > 1 && (!child.parent || TEXT_TAGS_IGNORING_ASSOCIATION.indexOf(child.parent.name) === -1)) {
-                    // Texts outside <p> or not <p> themselves (with siblings)
-                    var wrappedTexts = [];
-                    for (var j = i; j < children.length; j++) {
-                        // Loop on its next siblings and store them in an array
-                        // until we encounter a block or a <p>
-                        var nextSibling = children[j];
-                        if (nextSibling.wrapper !== 'Text' || TEXT_TAGS_IGNORING_ASSOCIATION.indexOf(nextSibling.tagName) !== -1) {
-                            break;
-                        }
-                        wrappedTexts.push(nextSibling);
-                        // Remove the child that has been nested
-                        children[j] = false;
-                    }
-                    // Replace the raw text with a <p> that has wrappedTexts as its children
-                    if (wrappedTexts.length) {
-                        children[i] = {
-                            attribs: {},
-                            children: wrappedTexts,
-                            nodeIndex: i,
-                            parent: child.parent,
-                            parentTag: child.parentTag,
-                            tagName: 'textwrapper',
-                            wrapper: 'Text'
-                        };
-                    }
-                }
-            }
-            return children.filter(function (parsedNode) {
-                return parsedNode !== false && parsedNode !== undefined;
+          if (_this3.childrenNeedAView(children) || BLOCK_TAGS.indexOf(name.toLowerCase()) !== -1) {
+            // If children cannot be nested in a Text, or if the tag
+            // maps to a block element, use a view
+            return {
+              wrapper: 'View',
+              children: children,
+              attribs: attribs,
+              parent: parent,
+              tagName: name,
+              parentTag: parentTag
+            };
+          } else if (TEXT_TAGS.indexOf(name.toLowerCase()) !== -1 || MIXED_TAGS.indexOf(name.toLowerCase()) !== -1) {
+            // We are able to nest its children inside a Text
+            return {
+              wrapper: 'Text',
+              children: children,
+              attribs: attribs,
+              parent: parent,
+              tagName: name,
+              parentTag: parentTag
+            };
+          } else if (_this3.renderers[name] && _this3.renderers[name].wrapper) {
+            return {
+              wrapper: _this3.renderers[name].wrapper,
+              children: children,
+              attribs: attribs,
+              parent: parent,
+              tagName: name,
+              parentTag: parentTag
+            };
+          }
+
+          return {
+            wrapper: 'View',
+            children: children,
+            attribs: attribs,
+            parent: parent,
+            tagName: name,
+            parentTag: parentTag
+          };
+        }
+      }).filter(function (parsedNode) {
+        return parsedNode !== false && parsedNode !== undefined;
+      }) // remove useless nodes
+      .map(function (parsedNode, nodeIndex) {
+        var wrapper = parsedNode.wrapper,
+            children = parsedNode.children,
+            attribs = parsedNode.attribs,
+            tagName = parsedNode.tagName;
+        var firstChild = children && children[0];
+
+        if (firstChild && children.length === 1) {
+          // Specific tweaks for wrappers with a single child
+          if ((attribs === firstChild.attribs || !firstChild.attribs) && firstChild.wrapper === wrapper && (tagName === firstChild.tagName || firstChild.tagName === 'rawtext')) {
+            // If the only child of a node is using the same wrapper, merge them into one
+            return _objectSpread2({}, parsedNode, {
+              attribs: _objectSpread2({}, attribs, {}, firstChild.attribs),
+              data: firstChild.data,
+              children: [],
+              tagName: tagName,
+              nodeIndex: nodeIndex
             });
+          }
         }
 
-        /**
-         * Maps the DOM nodes parsed by htmlparser2 into a simple structure that will be easy to render with
-         * native components. It removes ignored tags, chooses the right wrapper for each set of children
-         * to ensure we're not wrapping views inside texts and improves the structure recursively
-         * to prevent erratic rendering.
-         * @param {array} DOMNodes
-         * @param {boolean} [parentTag=false]
-         * @returns
-         * @memberof HTML
-         */
+        return _objectSpread2({}, parsedNode, {
+          nodeIndex: nodeIndex
+        });
+      }).map(function (parsedNode, nodeIndex) {
+        var wrapper = parsedNode.wrapper,
+            attribs = parsedNode.attribs,
+            tagName = parsedNode.tagName,
+            children = parsedNode.children;
 
-    }, {
-        key: 'mapDOMNodesTORNElements',
-        value: function mapDOMNodesTORNElements(DOMNodes) {
-            var _this3 = this;
+        if (wrapper === 'View' && attribs && _this3.wrapperHasTextChild(children)) {
+          // When encountering a View wrapper that has some styles and also Text children,
+          // let's filter out text-only styles and apply those to *all* Text children and
+          // remove them from the wrapper, mimicking browsers' behaviour better.
+          var wrapperStyles = _objectSpread2({}, tagsStyles[tagName] || {}, {}, _getElementClassStyles(attribs, classesStyles), {}, cssStringToObject(attribs.style || ''));
 
-            var parentTag = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-            var props = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.props;
-            var ignoreNodesFunction = props.ignoreNodesFunction,
-                ignoredTags = props.ignoredTags,
-                alterNode = props.alterNode,
-                alterData = props.alterData,
-                alterChildren = props.alterChildren,
-                tagsStyles = props.tagsStyles,
-                classesStyles = props.classesStyles;
-
-            var RNElements = DOMNodes.map(function (node, nodeIndex) {
-                var _node = node,
-                    children = _node.children,
-                    data = _node.data;
-
-                if (ignoreNodesFunction && ignoreNodesFunction(node, parentTag) === true) {
-                    return false;
-                }
-                if (ignoredTags.map(function (tag) {
-                    return tag.toLowerCase();
-                }).indexOf(node.name && node.name.toLowerCase()) !== -1) {
-                    return false;
-                }
-
-                if (alterNode) {
-                    var alteredNode = alterNode(node);
-                    node = alteredNode || node;
-                }
-                var _node2 = node,
-                    type = _node2.type,
-                    attribs = _node2.attribs,
-                    name = _node2.name,
-                    parent = _node2.parent;
-
-
-                if (alterData && data) {
-                    var alteredData = alterData(node);
-                    data = alteredData || data;
-                }
-                if (alterChildren && children) {
-                    var alteredChildren = alterChildren(node);
-                    children = alteredChildren || children;
-                }
-                // Remove whitespaces to check if it's just a blank text
-                var strippedData = data && data.replace(/\s/g, '');
-                if (type === 'text') {
-                    if (!strippedData || !strippedData.length) {
-                        // This is blank, don't render an useless additional component
-                        return false;
-                    }
-
-                    if (node.parent && node.parent.name && PREFORMATTED_TAGS.indexOf(node.parent.name) === -1) {
-                        // Remove line breaks in non-pre-formatted tags
-                        data = data.replace(/(\r\n|\n|\r)/gm, '');
-                    }
-
-                    // Text without tags, these can be mapped to the Text wrapper
-                    return {
-                        wrapper: 'Text',
-                        data: data,
-                        attribs: attribs || {},
-                        parent: parent,
-                        parentTag: parent && parent.name,
-                        tagName: name || 'rawtext'
-                    };
-                }
-                if (type === 'tag') {
-                    if (children) {
-                        // Recursively map all children with this method
-                        children = _this3.associateRawTexts(_this3.mapDOMNodesTORNElements(children, name));
-                    }
-                    if (_this3.childrenNeedAView(children) || BLOCK_TAGS.indexOf(name.toLowerCase()) !== -1) {
-                        // If children cannot be nested in a Text, or if the tag
-                        // maps to a block element, use a view
-                        return { wrapper: 'View', children: children, attribs: attribs, parent: parent, tagName: name, parentTag: parentTag };
-                    } else if (TEXT_TAGS.indexOf(name.toLowerCase()) !== -1 || MIXED_TAGS.indexOf(name.toLowerCase()) !== -1) {
-                        // We are able to nest its children inside a Text
-                        return { wrapper: 'Text', children: children, attribs: attribs, parent: parent, tagName: name, parentTag: parentTag };
-                    } else if (_this3.renderers[name] && _this3.renderers[name].wrapper) {
-                        return { wrapper: _this3.renderers[name].wrapper, children: children, attribs: attribs, parent: parent, tagName: name, parentTag: parentTag };
-                    }
-                    return { wrapper: 'View', children: children, attribs: attribs, parent: parent, tagName: name, parentTag: parentTag };
-                }
-            }).filter(function (parsedNode) {
-                return parsedNode !== false && parsedNode !== undefined;
-            }) // remove useless nodes
-            .map(function (parsedNode, nodeIndex) {
-                var wrapper = parsedNode.wrapper,
-                    children = parsedNode.children,
-                    attribs = parsedNode.attribs,
-                    tagName = parsedNode.tagName;
-
-                var firstChild = children && children[0];
-                if (firstChild && children.length === 1) {
-                    // Specific tweaks for wrappers with a single child
-                    if ((attribs === firstChild.attribs || !firstChild.attribs) && firstChild.wrapper === wrapper && (tagName === firstChild.tagName || firstChild.tagName === 'rawtext')) {
-                        // If the only child of a node is using the same wrapper, merge them into one
-                        return _extends({}, parsedNode, {
-                            attribs: _extends({}, attribs, firstChild.attribs),
-                            data: firstChild.data,
-                            children: [],
-                            tagName: tagName,
-                            nodeIndex: nodeIndex
-                        });
-                    }
-                }
-                return _extends({}, parsedNode, { nodeIndex: nodeIndex });
-            }).map(function (parsedNode, nodeIndex) {
-                var wrapper = parsedNode.wrapper,
-                    attribs = parsedNode.attribs,
-                    tagName = parsedNode.tagName,
-                    children = parsedNode.children;
-
-                if (wrapper === 'View' && attribs && _this3.wrapperHasTextChild(children)) {
-                    // When encountering a View wrapper that has some styles and also Text children,
-                    // let's filter out text-only styles and apply those to *all* Text children and
-                    // remove them from the wrapper, mimicking browsers' behaviour better.
-                    var wrapperStyles = _extends({}, tagsStyles[tagName] || {}, _getElementClassStyles(attribs, classesStyles), cssStringToObject(attribs.style || ''));
-
-                    var textChildrenInheritedStyles = {};
-                    Object.keys(wrapperStyles).forEach(function (styleKey) {
-                        // Extract text-only styles
-                        if (TextOnlyPropTypes.indexOf(styleKey) !== -1) {
-                            textChildrenInheritedStyles[styleKey] = wrapperStyles[styleKey];
-                            delete wrapperStyles[styleKey];
-                        }
-                    });
-                    if (Object.keys(textChildrenInheritedStyles).length === 0) {
-                        // No style to apply to text children, avoid unecessary loops
-                        return parsedNode;
-                    }
-                    // Re-write wrapper's styles as a string
-                    parsedNode.attribs.style = cssObjectToString(wrapperStyles);
-                    for (var i = 0; i < children.length; i++) {
-                        var child = children[i];
-                        var _wrapper = child.wrapper,
-                            _attribs = child.attribs;
-
-
-                        if (_wrapper === 'Text') {
-                            // Set (or merge) the inherited text styles extracted from the wrapper for
-                            // each Text child
-                            if (!_attribs.style) {
-                                child.attribs.style = cssObjectToString(textChildrenInheritedStyles);
-                            } else {
-                                child.attribs.style = cssObjectToString(_extends({}, textChildrenInheritedStyles, cssStringToObject(child.attribs.style)));
-                            }
-                        }
-                    }
-                }
-                return parsedNode;
-            });
-            return this.associateRawTexts(RNElements);
-        }
-
-        /**
-         * Takes the parsed nodes from mapDOMNodesTORNElements and actually renders native components.
-         * Calls the utils that convert the CSS into react-native compatible styles and renders custom
-         * components when needed.
-         * @param {boolean} RNElements
-         * @param {string} [parentWrapper='root']
-         * @param {number} [parentIndex=0]
-         * @returns {array}
-         * @memberof HTML
-         */
-
-    }, {
-        key: 'renderRNElements',
-        value: function renderRNElements(RNElements) {
-
-            var _this4 = this;
-
-            var parentIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-            var props = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.props;
-            var allowFontScaling = props.allowFontScaling,
-                allowedStyles = props.allowedStyles,
-                baseFontStyle = props.baseFontStyle,
-                classesStyles = props.classesStyles,
-                emSize = props.emSize,
-                ignoredStyles = props.ignoredStyles,
-                ptSize = props.ptSize,
-                tagsStyles = props.tagsStyles,
-                textSelectable = props.textSelectable;
-
-
-            return RNElements && RNElements.length ? RNElements.map(function (element, index) {
-                var attribs = element.attribs,
-                    data = element.data,
-                    tagName = element.tagName,
-                    parentTag = element.parentTag,
-                    children = element.children,
-                    nodeIndex = element.nodeIndex,
-                    wrapper = element.wrapper;
-
-                var Wrapper = wrapper === 'Text' ? reactNative.Text : reactNative.View;
-                var key = wrapper + '-' + parentIndex + '-' + nodeIndex + '-' + tagName + '-' + index + '-' + parentTag;
-                var convertedCSSStyles = attribs && attribs.style ? cssStringToRNStyle(attribs.style, Wrapper === reactNative.Text ? STYLESETS.TEXT : STYLESETS.VIEW, // proper prop-types validation
-                { parentTag: tagName, emSize: emSize, ptSize: ptSize, ignoredStyles: ignoredStyles, allowedStyles: allowedStyles }) : {};
-
-                var childElements = children && children.length ? children.map(function (child, childIndex) {
-                    return _this4.renderRNElements([child], wrapper, index, props);
-                }) : false;
-
-                if (_this4.renderers[tagName]) {
-                    var customRenderer = typeof _this4.renderers[tagName] === 'function' ? _this4.renderers[tagName] : _this4.renderers[tagName].renderer;
-
-                    if (!customRenderer || typeof customRenderer !== 'function') {
-                        console.warn('Custom renderer for ' + tagName + ' supplied incorrectly. Please check out the docs.');
-                        return undefined;
-                    }
-                    // If a custom renderer is available for this tag
-                    return customRenderer(attribs, childElements, convertedCSSStyles, _extends({}, props, {
-                        parentWrapper: wrapper,
-                        parentTag: parentTag,
-                        nodeIndex: nodeIndex,
-                        parentIndex: parentIndex,
-                        key: key,
-                        data: data,
-                        rawChildren: children
-                    }));
-                }
-
-                var classStyles = _getElementClassStyles(attribs, classesStyles);
-                var textElement = data ? React__default.createElement(
-                    reactNative.Text,
-                    {
-                        allowFontScaling: allowFontScaling,
-                        style: computeTextStyles(element, {
-                            defaultTextStyles: _this4.defaultTextStyles,
-                            tagsStyles: tagsStyles,
-                            classesStyles: classesStyles,
-                            baseFontStyle: baseFontStyle,
-                            emSize: emSize,
-                            ptSize: ptSize,
-                            ignoredStyles: ignoredStyles,
-                            allowedStyles: allowedStyles
-                        })
-                    },
-                    data
-                ) : false;
-
-                var style = [!tagsStyles || !tagsStyles[tagName] ? (Wrapper === reactNative.Text ? _this4.defaultTextStyles : _this4.defaultBlockStyles)[tagName] : undefined, tagsStyles ? tagsStyles[tagName] : undefined, classStyles, convertedCSSStyles].filter(function (s) {
-                    return s !== undefined;
-                });
-
-                var renderersProps = {};
-                if (Wrapper === reactNative.Text) {
-                    renderersProps.allowFontScaling = allowFontScaling;
-                    renderersProps.selectable = textSelectable;
-                }
-                return React__default.createElement(
-                    Wrapper,
-                    _extends({ key: key, style: style }, renderersProps),
-                    textElement,
-                    childElements
-                );
-            }) : false;
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _props3 = this.props,
-                allowFontScaling = _props3.allowFontScaling,
-                customWrapper = _props3.customWrapper,
-                remoteLoadingView = _props3.remoteLoadingView,
-                remoteErrorView = _props3.remoteErrorView;
-            var _state = this.state,
-                RNNodes = _state.RNNodes,
-                loadingRemoteURL = _state.loadingRemoteURL,
-                errorLoadingRemoteURL = _state.errorLoadingRemoteURL;
-
-            if (!RNNodes && !loadingRemoteURL && !errorLoadingRemoteURL) {
-                return null;
-            } else if (loadingRemoteURL) {
-                return remoteLoadingView ? remoteLoadingView(this.props, this.state) : React__default.createElement(
-                    reactNative.View,
-                    { style: { flex: 1, alignItems: 'center' } },
-                    React__default.createElement(reactNative.ActivityIndicator, null)
-                );
-            } else if (errorLoadingRemoteURL) {
-                return remoteErrorView ? remoteErrorView(this.props, this.state) : React__default.createElement(
-                    reactNative.View,
-                    { style: { flex: 1, alignItems: 'center' } },
-                    React__default.createElement(
-                        reactNative.Text,
-                        { allowFontScaling: allowFontScaling, style: { fontStyle: 'italic', fontSize: 16 } },
-                        'Could not load ',
-                        this.props.uri
-                    )
-                );
+          var textChildrenInheritedStyles = {};
+          Object.keys(wrapperStyles).forEach(function (styleKey) {
+            // Extract text-only styles
+            if (TextOnlyPropTypes.indexOf(styleKey) !== -1) {
+              textChildrenInheritedStyles[styleKey] = wrapperStyles[styleKey];
+              delete wrapperStyles[styleKey];
             }
+          });
 
-            return customWrapper ? customWrapper(RNNodes) : React__default.createElement(
-                reactNative.View,
-                { style: this.props.containerStyle || {} },
-                RNNodes
-            );
+          if (Object.keys(textChildrenInheritedStyles).length === 0) {
+            // No style to apply to text children, avoid unecessary loops
+            return parsedNode;
+          } // Re-write wrapper's styles as a string
+
+
+          parsedNode.attribs.style = cssObjectToString(wrapperStyles);
+
+          for (var i = 0; i < children.length; i++) {
+            var child = children[i];
+            var _wrapper = child.wrapper,
+                _attribs = child.attribs;
+
+            if (_wrapper === 'Text') {
+              // Set (or merge) the inherited text styles extracted from the wrapper for
+              // each Text child
+              if (!_attribs.style) {
+                child.attribs.style = cssObjectToString(textChildrenInheritedStyles);
+              } else {
+                child.attribs.style = cssObjectToString(_objectSpread2({}, textChildrenInheritedStyles, {}, cssStringToObject(child.attribs.style)));
+              }
+            }
+          }
         }
-    }]);
-    return HTML;
+
+        return parsedNode;
+      });
+      return this.associateRawTexts(RNElements);
+    }
+    /**
+     * Takes the parsed nodes from mapDOMNodesTORNElements and actually renders native components.
+     * Calls the utils that convert the CSS into react-native compatible styles and renders custom
+     * components when needed.
+     * @param {boolean} RNElements
+     * @param {string} [parentWrapper='root']
+     * @param {number} [parentIndex=0]
+     * @returns {array}
+     * @memberof HTML
+     */
+
+  }, {
+    key: "renderRNElements",
+    value: function renderRNElements(RNElements) {
+      var _this4 = this;
+      var parentIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+      var props = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this.props;
+      var allowFontScaling = props.allowFontScaling,
+          allowedStyles = props.allowedStyles,
+          baseFontStyle = props.baseFontStyle,
+          classesStyles = props.classesStyles,
+          emSize = props.emSize,
+          ignoredStyles = props.ignoredStyles,
+          ptSize = props.ptSize,
+          tagsStyles = props.tagsStyles,
+          textSelectable = props.textSelectable;
+      return RNElements && RNElements.length ? RNElements.map(function (element, index) {
+        var attribs = element.attribs,
+            data = element.data,
+            tagName = element.tagName,
+            parentTag = element.parentTag,
+            children = element.children,
+            nodeIndex = element.nodeIndex,
+            wrapper = element.wrapper;
+        var Wrapper = wrapper === 'Text' ? reactNative.Text : reactNative.View;
+        var key = "".concat(wrapper, "-").concat(parentIndex, "-").concat(nodeIndex, "-").concat(tagName, "-").concat(index, "-").concat(parentTag);
+        var convertedCSSStyles = attribs && attribs.style ? cssStringToRNStyle(attribs.style, Wrapper === reactNative.Text ? STYLESETS.TEXT : STYLESETS.VIEW, // proper prop-types validation
+        {
+          parentTag: tagName,
+          emSize: emSize,
+          ptSize: ptSize,
+          ignoredStyles: ignoredStyles,
+          allowedStyles: allowedStyles
+        }) : {};
+        var childElements = children && children.length ? children.map(function (child, childIndex) {
+          return _this4.renderRNElements([child], wrapper, index, props);
+        }) : false;
+
+        if (_this4.renderers[tagName]) {
+          var customRenderer = typeof _this4.renderers[tagName] === 'function' ? _this4.renderers[tagName] : _this4.renderers[tagName].renderer;
+
+          if (!customRenderer || typeof customRenderer !== 'function') {
+            console.warn("Custom renderer for ".concat(tagName, " supplied incorrectly. Please check out the docs."));
+            return undefined;
+          } // If a custom renderer is available for this tag
+
+
+          return customRenderer(attribs, childElements, convertedCSSStyles, _objectSpread2({}, props, {
+            parentWrapper: wrapper,
+            parentTag: parentTag,
+            nodeIndex: nodeIndex,
+            parentIndex: parentIndex,
+            key: key,
+            data: data,
+            rawChildren: children
+          }));
+        }
+
+        var classStyles = _getElementClassStyles(attribs, classesStyles);
+
+        var textElement = data ? React__default.createElement(reactNative.Text, {
+          allowFontScaling: allowFontScaling,
+          style: computeTextStyles(element, {
+            defaultTextStyles: _this4.defaultTextStyles,
+            tagsStyles: tagsStyles,
+            classesStyles: classesStyles,
+            baseFontStyle: baseFontStyle,
+            emSize: emSize,
+            ptSize: ptSize,
+            ignoredStyles: ignoredStyles,
+            allowedStyles: allowedStyles
+          })
+        }, data) : false;
+        var style = [!tagsStyles || !tagsStyles[tagName] ? (Wrapper === reactNative.Text ? _this4.defaultTextStyles : _this4.defaultBlockStyles)[tagName] : undefined, tagsStyles ? tagsStyles[tagName] : undefined, classStyles, convertedCSSStyles].filter(function (s) {
+          return s !== undefined;
+        });
+        var renderersProps = {};
+
+        if (Wrapper === reactNative.Text) {
+          renderersProps.allowFontScaling = allowFontScaling;
+          renderersProps.selectable = textSelectable;
+        }
+
+        return React__default.createElement(Wrapper, _extends({
+          key: key,
+          style: style
+        }, renderersProps), textElement, childElements);
+      }) : false;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props3 = this.props,
+          allowFontScaling = _this$props3.allowFontScaling,
+          customWrapper = _this$props3.customWrapper,
+          remoteLoadingView = _this$props3.remoteLoadingView,
+          remoteErrorView = _this$props3.remoteErrorView;
+      var _this$state = this.state,
+          RNNodes = _this$state.RNNodes,
+          loadingRemoteURL = _this$state.loadingRemoteURL,
+          errorLoadingRemoteURL = _this$state.errorLoadingRemoteURL;
+
+      if (!RNNodes && !loadingRemoteURL && !errorLoadingRemoteURL) {
+        return null;
+      } else if (loadingRemoteURL) {
+        return remoteLoadingView ? remoteLoadingView(this.props, this.state) : React__default.createElement(reactNative.View, {
+          style: {
+            flex: 1,
+            alignItems: 'center'
+          }
+        }, React__default.createElement(reactNative.ActivityIndicator, null));
+      } else if (errorLoadingRemoteURL) {
+        return remoteErrorView ? remoteErrorView(this.props, this.state) : React__default.createElement(reactNative.View, {
+          style: {
+            flex: 1,
+            alignItems: 'center'
+          }
+        }, React__default.createElement(reactNative.Text, {
+          allowFontScaling: allowFontScaling,
+          style: {
+            fontStyle: 'italic',
+            fontSize: 16
+          }
+        }, "Could not load ", this.props.uri));
+      }
+
+      return customWrapper ? customWrapper(RNNodes) : React__default.createElement(reactNative.View, {
+        style: this.props.containerStyle || {}
+      }, RNNodes);
+    }
+  }]);
+
+  return HTML;
 }(React.PureComponent);
 
-HTML.propTypes = {
-    renderers: PropTypes.object.isRequired,
-    ignoredTags: PropTypes.array.isRequired,
-    ignoredStyles: PropTypes.array.isRequired,
-    allowedStyles: PropTypes.array,
-    decodeEntities: PropTypes.bool.isRequired,
-    debug: PropTypes.bool.isRequired,
-    listsPrefixesRenderers: PropTypes.object,
-    ignoreNodesFunction: PropTypes.func,
-    alterData: PropTypes.func,
-    alterChildren: PropTypes.func,
-    alterNode: PropTypes.func,
-    html: PropTypes.string,
-    uri: PropTypes.string,
-    tagsStyles: PropTypes.object,
-    classesStyles: PropTypes.object,
-    containerStyle: reactNative.ViewPropTypes ? reactNative.ViewPropTypes.style : reactNative.View.propTypes.style,
-    customWrapper: PropTypes.func,
-    onLinkPress: PropTypes.func,
-    onParsed: PropTypes.func,
-    imagesMaxWidth: PropTypes.number,
-    staticContentMaxWidth: PropTypes.number,
-    imagesInitialDimensions: PropTypes.shape({
-        width: PropTypes.number,
-        height: PropTypes.number
-    }),
-    emSize: PropTypes.number.isRequired,
-    ptSize: PropTypes.number.isRequired,
-    baseFontStyle: PropTypes.object.isRequired,
-    textSelectable: PropTypes.bool,
-    renderersProps: PropTypes.object,
-    allowFontScaling: PropTypes.bool
-};
-HTML.defaultProps = {
-    renderers: HTMLRenderers,
-    debug: false,
-    decodeEntities: true,
-    emSize: 14,
-    ptSize: 1.3,
-    staticContentMaxWidth: reactNative.Dimensions.get('window').width,
-    imagesMaxWidth: reactNative.Dimensions.get('window').width,
-    ignoredTags: IGNORED_TAGS,
-    ignoredStyles: [],
-    baseFontStyle: { fontSize: 14 },
-    tagsStyles: {},
-    classesStyles: {},
-    textSelectable: false,
-    allowFontScaling: true
-};
+_defineProperty(HTML, "propTypes", {
+  renderers: PropTypes.object.isRequired,
+  ignoredTags: PropTypes.array.isRequired,
+  ignoredStyles: PropTypes.array.isRequired,
+  allowedStyles: PropTypes.array,
+  decodeEntities: PropTypes.bool.isRequired,
+  debug: PropTypes.bool.isRequired,
+  listsPrefixesRenderers: PropTypes.object,
+  ignoreNodesFunction: PropTypes.func,
+  alterData: PropTypes.func,
+  alterChildren: PropTypes.func,
+  alterNode: PropTypes.func,
+  html: PropTypes.string,
+  uri: PropTypes.string,
+  tagsStyles: PropTypes.object,
+  classesStyles: PropTypes.object,
+  containerStyle: reactNative.ViewPropTypes ? reactNative.ViewPropTypes.style : reactNative.View.propTypes.style,
+  customWrapper: PropTypes.func,
+  onLinkPress: PropTypes.func,
+  onParsed: PropTypes.func,
+  imagesMaxWidth: PropTypes.number,
+  staticContentMaxWidth: PropTypes.number,
+  imagesInitialDimensions: PropTypes.shape({
+    width: PropTypes.number,
+    height: PropTypes.number
+  }),
+  emSize: PropTypes.number.isRequired,
+  ptSize: PropTypes.number.isRequired,
+  baseFontStyle: PropTypes.object.isRequired,
+  textSelectable: PropTypes.bool,
+  renderersProps: PropTypes.object,
+  allowFontScaling: PropTypes.bool
+});
+
+_defineProperty(HTML, "defaultProps", {
+  renderers: HTMLRenderers,
+  debug: false,
+  decodeEntities: true,
+  emSize: 14,
+  ptSize: 1.3,
+  staticContentMaxWidth: reactNative.Dimensions.get('window').width,
+  imagesMaxWidth: reactNative.Dimensions.get('window').width,
+  ignoredTags: IGNORED_TAGS,
+  ignoredStyles: [],
+  baseFontStyle: {
+    fontSize: 14
+  },
+  tagsStyles: {},
+  classesStyles: {},
+  textSelectable: false,
+  allowFontScaling: true
+});
 
 module.exports = HTML;
 //# sourceMappingURL=index.js.map
