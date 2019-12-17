@@ -1,6 +1,8 @@
 "use strict";
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.a = a;
 exports.img = img;
 exports.ul = ul;
@@ -31,22 +33,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function a(htmlAttribs, children, convertedCSSStyles, passProps) {
-  var style = (0, _HTMLStyles._constructStyles)({
+  const style = (0, _HTMLStyles._constructStyles)({
     tagName: 'a',
-    htmlAttribs: htmlAttribs,
-    passProps: passProps,
+    htmlAttribs,
+    passProps,
     styleSet: passProps.parentWrapper === 'Text' ? 'TEXT' : 'VIEW'
   }); // !! This deconstruction needs to happen after the styles construction since
   // the passed props might be altered by it !!
 
-  var parentWrapper = passProps.parentWrapper,
-      onLinkPress = passProps.onLinkPress,
-      key = passProps.key,
-      data = passProps.data;
+  const {
+    parentWrapper,
+    onLinkPress,
+    key,
+    data
+  } = passProps;
 
-  var onPress = function onPress(evt) {
-    return onLinkPress && htmlAttribs && htmlAttribs.href ? onLinkPress(evt, htmlAttribs.href, htmlAttribs) : undefined;
-  };
+  const onPress = evt => onLinkPress && htmlAttribs && htmlAttribs.href ? onLinkPress(evt, htmlAttribs.href, htmlAttribs) : undefined;
 
   if (parentWrapper === 'Text') {
     return _react.default.createElement(_reactNative.Text, _extends({}, passProps, {
@@ -62,25 +64,23 @@ function a(htmlAttribs, children, convertedCSSStyles, passProps) {
   }
 }
 
-function img(htmlAttribs, children, convertedCSSStyles, passProps) {
-  if (passProps === void 0) {
-    passProps = {};
-  }
-
+function img(htmlAttribs, children, convertedCSSStyles, passProps = {}) {
   if (!htmlAttribs.src) {
     return false;
   }
 
-  var style = (0, _HTMLStyles._constructStyles)({
+  const style = (0, _HTMLStyles._constructStyles)({
     tagName: 'img',
-    htmlAttribs: htmlAttribs,
-    passProps: passProps,
+    htmlAttribs,
+    passProps,
     styleSet: 'IMAGE'
   });
-  var src = htmlAttribs.src,
-      alt = htmlAttribs.alt,
-      width = htmlAttribs.width,
-      height = htmlAttribs.height;
+  const {
+    src,
+    alt,
+    width,
+    height
+  } = htmlAttribs;
   return _react.default.createElement(_HTMLImage.default, _extends({
     source: {
       uri: src
@@ -92,35 +92,32 @@ function img(htmlAttribs, children, convertedCSSStyles, passProps) {
   }, passProps));
 }
 
-function ul(htmlAttribs, children, convertedCSSStyles, passProps) {
-  if (passProps === void 0) {
-    passProps = {};
-  }
-
-  var style = (0, _HTMLStyles._constructStyles)({
+function ul(htmlAttribs, children, convertedCSSStyles, passProps = {}) {
+  const style = (0, _HTMLStyles._constructStyles)({
     tagName: 'ul',
-    htmlAttribs: htmlAttribs,
-    passProps: passProps,
+    htmlAttribs,
+    passProps,
     styleSet: 'VIEW'
   });
-  var _passProps = passProps,
-      allowFontScaling = _passProps.allowFontScaling,
-      rawChildren = _passProps.rawChildren,
-      nodeIndex = _passProps.nodeIndex,
-      key = _passProps.key,
-      baseFontStyle = _passProps.baseFontStyle,
-      listsPrefixesRenderers = _passProps.listsPrefixesRenderers;
-  var baseFontSize = baseFontStyle.fontSize || 14;
-  children = children && children.map(function (child, index) {
-    var rawChild = rawChildren[index];
-    var prefix = false;
-    var rendererArgs = [htmlAttribs, children, convertedCSSStyles, _objectSpread({}, passProps, {
-      index: index
+  const {
+    allowFontScaling,
+    rawChildren,
+    nodeIndex,
+    key,
+    baseFontStyle,
+    listsPrefixesRenderers
+  } = passProps;
+  const baseFontSize = baseFontStyle.fontSize || 14;
+  children = children && children.map((child, index) => {
+    const rawChild = rawChildren[index];
+    let prefix = false;
+    const rendererArgs = [htmlAttribs, children, convertedCSSStyles, _objectSpread({}, passProps, {
+      index
     })];
 
     if (rawChild) {
       if (rawChild.parentTag === 'ul' && rawChild.tagName === 'li') {
-        prefix = listsPrefixesRenderers && listsPrefixesRenderers.ul ? listsPrefixesRenderers.ul.apply(listsPrefixesRenderers, rendererArgs) : _react.default.createElement(_reactNative.View, {
+        prefix = listsPrefixesRenderers && listsPrefixesRenderers.ul ? listsPrefixesRenderers.ul(...rendererArgs) : _react.default.createElement(_reactNative.View, {
           style: {
             marginRight: 10,
             width: baseFontSize / 2.8,
@@ -131,7 +128,7 @@ function ul(htmlAttribs, children, convertedCSSStyles, passProps) {
           }
         });
       } else if (rawChild.parentTag === 'ol' && rawChild.tagName === 'li') {
-        prefix = listsPrefixesRenderers && listsPrefixesRenderers.ol ? listsPrefixesRenderers.ol.apply(listsPrefixesRenderers, rendererArgs) : _react.default.createElement(_reactNative.Text, {
+        prefix = listsPrefixesRenderers && listsPrefixesRenderers.ol ? listsPrefixesRenderers.ol(...rendererArgs) : _react.default.createElement(_reactNative.Text, {
           allowFontScaling: allowFontScaling,
           style: {
             marginRight: 5,
@@ -142,7 +139,7 @@ function ul(htmlAttribs, children, convertedCSSStyles, passProps) {
     }
 
     return _react.default.createElement(_reactNative.View, {
-      key: "list-" + nodeIndex + "-" + index + "-" + key,
+      key: `list-${nodeIndex}-${index}-${key}`,
       style: {
         flexDirection: 'row',
         marginBottom: 10
@@ -159,33 +156,35 @@ function ul(htmlAttribs, children, convertedCSSStyles, passProps) {
   }, children);
 }
 
-var ol = ul;
+const ol = ul;
 exports.ol = ol;
 
 function iframe(htmlAttribs, children, convertedCSSStyles, passProps) {
-  var staticContentMaxWidth = passProps.staticContentMaxWidth,
-      tagsStyles = passProps.tagsStyles,
-      classesStyles = passProps.classesStyles;
-  var tagStyleHeight = tagsStyles.iframe && tagsStyles.iframe.height;
-  var tagStyleWidth = tagsStyles.iframe && tagsStyles.iframe.width;
-  var classStyles = (0, _HTMLStyles._getElementClassStyles)(htmlAttribs, classesStyles);
-  var classStyleWidth = classStyles.width;
-  var classStyleHeight = classStyles.height;
-  var attrHeight = htmlAttribs.height ? parseInt(htmlAttribs.height) : false;
-  var attrWidth = htmlAttribs.width ? parseInt(htmlAttribs.width) : false;
-  var height = attrHeight || classStyleHeight || tagStyleHeight || 200;
-  var width = attrWidth || classStyleWidth || tagStyleWidth || staticContentMaxWidth;
-  var style = (0, _HTMLStyles._constructStyles)({
+  const {
+    staticContentMaxWidth,
+    tagsStyles,
+    classesStyles
+  } = passProps;
+  const tagStyleHeight = tagsStyles.iframe && tagsStyles.iframe.height;
+  const tagStyleWidth = tagsStyles.iframe && tagsStyles.iframe.width;
+  const classStyles = (0, _HTMLStyles._getElementClassStyles)(htmlAttribs, classesStyles);
+  const classStyleWidth = classStyles.width;
+  const classStyleHeight = classStyles.height;
+  const attrHeight = htmlAttribs.height ? parseInt(htmlAttribs.height) : false;
+  const attrWidth = htmlAttribs.width ? parseInt(htmlAttribs.width) : false;
+  const height = attrHeight || classStyleHeight || tagStyleHeight || 200;
+  const width = attrWidth || classStyleWidth || tagStyleWidth || staticContentMaxWidth;
+  const style = (0, _HTMLStyles._constructStyles)({
     tagName: 'iframe',
-    htmlAttribs: htmlAttribs,
-    passProps: passProps,
+    htmlAttribs,
+    passProps,
     styleSet: 'VIEW',
     additionalStyles: [{
-      height: height,
-      width: width
+      height,
+      width
     }]
   });
-  var source = htmlAttribs.srcdoc ? {
+  const source = htmlAttribs.srcdoc ? {
     html: htmlAttribs.srcdoc
   } : {
     uri: htmlAttribs.src
@@ -217,9 +216,10 @@ function br(htlmAttribs, children, convertedCSSStyles, passProps) {
   }, "\n");
 }
 
-function textwrapper(htmlAttribs, children, convertedCSSStyles, _ref) {
-  var allowFontScaling = _ref.allowFontScaling,
-      key = _ref.key;
+function textwrapper(htmlAttribs, children, convertedCSSStyles, {
+  allowFontScaling,
+  key
+}) {
   return _react.default.createElement(_reactNative.Text, {
     allowFontScaling: allowFontScaling,
     key: key,

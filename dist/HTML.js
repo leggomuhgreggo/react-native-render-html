@@ -1,6 +1,8 @@
 "use strict";
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
@@ -21,11 +23,15 @@ var HTMLRenderers = _interopRequireWildcard(require("./HTMLRenderers"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -33,37 +39,27 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-var HTML =
-/*#__PURE__*/
-function (_PureComponent) {
-  _inheritsLoose(HTML, _PureComponent);
-
-  function HTML(props) {
-    var _this;
-
-    _this = _PureComponent.call(this, props) || this;
-    _this.state = {};
-    _this.renderers = _objectSpread({}, HTMLRenderers, {}, _this.props.renderers || {});
-    return _this;
+class HTML extends _react.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.renderers = _objectSpread({}, HTMLRenderers, {}, this.props.renderers || {});
   }
 
-  var _proto = HTML.prototype;
-
-  _proto.componentWillMount = function componentWillMount() {
+  componentWillMount() {
     this.generateDefaultStyles();
-  };
+  }
 
-  _proto.componentDidMount = function componentDidMount() {
+  componentDidMount() {
     this.registerDOM();
-  };
+  }
 
-  _proto.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-    var _this$props = this.props,
-        html = _this$props.html,
-        uri = _this$props.uri,
-        renderers = _this$props.renderers;
+  componentWillReceiveProps(nextProps) {
+    const {
+      html,
+      uri,
+      renderers
+    } = this.props;
     this.generateDefaultStyles(nextProps.baseFontStyle);
 
     if (renderers !== nextProps.renderers) {
@@ -78,122 +74,82 @@ function (_PureComponent) {
       // to compute potential style changes
       this.parseDOM(this.state.dom, nextProps);
     }
-  };
+  }
 
-  _proto.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.state.dom !== prevState.dom) {
       this.parseDOM(this.state.dom);
     }
-  };
+  }
 
-  _proto.registerDOM = function registerDOM(props, cb) {
-    var _props, html, uri, response;
+  registerDOM(props = this.props, cb) {
+    var _this = this;
 
-    return regeneratorRuntime.async(function registerDOM$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            if (props === void 0) {
-              props = this.props;
-            }
+    return _asyncToGenerator(function* () {
+      const {
+        html,
+        uri
+      } = props;
 
-            _props = props, html = _props.html, uri = _props.uri;
-
-            if (!html) {
-              _context.next = 6;
-              break;
-            }
-
-            this.setState({
-              dom: html,
-              loadingRemoteURL: false,
-              errorLoadingRemoteURL: false
-            });
-            _context.next = 29;
-            break;
-
-          case 6:
-            if (!props.uri) {
-              _context.next = 28;
-              break;
-            }
-
-            _context.prev = 7;
-            _context.prev = 8;
-            this.setState({
+      if (html) {
+        _this.setState({
+          dom: html,
+          loadingRemoteURL: false,
+          errorLoadingRemoteURL: false
+        });
+      } else if (props.uri) {
+        try {
+          // WIP : This should render a loader and html prop should not be set in state
+          // Error handling would be nice, too.
+          try {
+            _this.setState({
               loadingRemoteURL: true,
               errorLoadingRemoteURL: false
             });
-            _context.next = 12;
-            return regeneratorRuntime.awrap(fetch(uri));
 
-          case 12:
-            response = _context.sent;
-            this.setState({
+            let response = yield fetch(uri);
+
+            _this.setState({
               dom: response._bodyText,
               loadingRemoteURL: false
             });
-            _context.next = 20;
-            break;
+          } catch (err) {
+            console.warn(err);
 
-          case 16:
-            _context.prev = 16;
-            _context.t0 = _context["catch"](8);
-            console.warn(_context.t0);
-            this.setState({
+            _this.setState({
               errorLoadingRemoteURL: true,
               loadingRemoteURL: false
             });
-
-          case 20:
-            _context.next = 26;
-            break;
-
-          case 22:
-            _context.prev = 22;
-            _context.t1 = _context["catch"](7);
-            console.warn('react-native-render-html', "Couldn't fetch remote HTML from uri : " + uri);
-            return _context.abrupt("return", false);
-
-          case 26:
-            _context.next = 29;
-            break;
-
-          case 28:
-            console.warn('react-native-render-html', 'Please provide the html or uri prop.');
-
-          case 29:
-          case "end":
-            return _context.stop();
+          }
+        } catch (err) {
+          console.warn('react-native-render-html', `Couldn't fetch remote HTML from uri : ${uri}`);
+          return false;
         }
+      } else {
+        console.warn('react-native-render-html', 'Please provide the html or uri prop.');
       }
-    }, null, this, [[7, 22], [8, 16]]);
-  };
+    })();
+  }
 
-  _proto.parseDOM = function parseDOM(dom, props) {
-    var _this2 = this;
-
-    if (props === void 0) {
-      props = this.props;
-    }
-
-    var _this$props2 = this.props,
-        decodeEntities = _this$props2.decodeEntities,
-        debug = _this$props2.debug,
-        onParsed = _this$props2.onParsed;
-    var parser = new _htmlparser.default.Parser(new _htmlparser.default.DomHandler(function (_err, dom) {
-      var RNElements = _this2.mapDOMNodesTORNElements(dom, false, props);
+  parseDOM(dom, props = this.props) {
+    const {
+      decodeEntities,
+      debug,
+      onParsed
+    } = this.props;
+    const parser = new _htmlparser.default.Parser(new _htmlparser.default.DomHandler((_err, dom) => {
+      let RNElements = this.mapDOMNodesTORNElements(dom, false, props);
 
       if (onParsed) {
-        var alteredRNElements = onParsed(dom, RNElements);
+        const alteredRNElements = onParsed(dom, RNElements);
 
         if (alteredRNElements) {
           RNElements = alteredRNElements;
         }
       }
 
-      _this2.setState({
-        RNNodes: _this2.renderRNElements(RNElements, 'root', 0, props)
+      this.setState({
+        RNNodes: this.renderRNElements(RNElements, 'root', 0, props)
       });
 
       if (debug) {
@@ -205,13 +161,9 @@ function (_PureComponent) {
     });
     parser.write(dom);
     parser.done();
-  };
+  }
 
-  _proto.generateDefaultStyles = function generateDefaultStyles(baseFontStyle) {
-    if (baseFontStyle === void 0) {
-      baseFontStyle = this.props.baseFontStyle;
-    }
-
+  generateDefaultStyles(baseFontStyle = this.props.baseFontStyle) {
     this.defaultBlockStyles = (0, _HTMLDefaultStyles.generateDefaultBlockStyles)(baseFontStyle.fontSize || 14);
     this.defaultTextStyles = (0, _HTMLDefaultStyles.generateDefaultTextStyles)(baseFontStyle.fontSize || 14);
   }
@@ -221,10 +173,10 @@ function (_PureComponent) {
    * @returns {boolean}
    * @memberof HTML
    */
-  ;
 
-  _proto.childrenNeedAView = function childrenNeedAView(children) {
-    for (var i = 0; i < children.length; i++) {
+
+  childrenNeedAView(children) {
+    for (let i = 0; i < children.length; i++) {
       if (children[i].wrapper === 'View') {
         // If we find at least one View, it has to be nested in one
         return true;
@@ -233,10 +185,10 @@ function (_PureComponent) {
 
 
     return false;
-  };
+  }
 
-  _proto.wrapperHasTextChild = function wrapperHasTextChild(children) {
-    for (var i = 0; i < children.length; i++) {
+  wrapperHasTextChild(children) {
+    for (let i = 0; i < children.length; i++) {
       if (children[i].wrapper === 'Text') {
         return true;
       }
@@ -252,20 +204,20 @@ function (_PureComponent) {
    * @returns {array}
    * @memberof HTML
    */
-  ;
 
-  _proto.associateRawTexts = function associateRawTexts(children) {
-    for (var i = 0; i < children.length; i++) {
-      var child = children[i];
+
+  associateRawTexts(children) {
+    for (let i = 0; i < children.length; i++) {
+      const child = children[i];
 
       if (child.wrapper === 'Text' && _HTMLUtils.TEXT_TAGS_IGNORING_ASSOCIATION.indexOf(child.tagName) === -1 && children.length > 1 && (!child.parent || _HTMLUtils.TEXT_TAGS_IGNORING_ASSOCIATION.indexOf(child.parent.name) === -1)) {
         // Texts outside <p> or not <p> themselves (with siblings)
-        var wrappedTexts = [];
+        let wrappedTexts = [];
 
-        for (var j = i; j < children.length; j++) {
+        for (let j = i; j < children.length; j++) {
           // Loop on its next siblings and store them in an array
           // until we encounter a block or a <p>
-          var nextSibling = children[j];
+          let nextSibling = children[j];
 
           if (nextSibling.wrapper !== 'Text' || _HTMLUtils.TEXT_TAGS_IGNORING_ASSOCIATION.indexOf(nextSibling.tagName) !== -1) {
             break;
@@ -291,9 +243,7 @@ function (_PureComponent) {
       }
     }
 
-    return children.filter(function (parsedNode) {
-      return parsedNode !== false && parsedNode !== undefined;
-    });
+    return children.filter(parsedNode => parsedNode !== false && parsedNode !== undefined);
   }
   /**
    * Maps the DOM nodes parsed by htmlparser2 into a simple structure that will be easy to render with
@@ -305,65 +255,56 @@ function (_PureComponent) {
    * @returns
    * @memberof HTML
    */
-  ;
 
-  _proto.mapDOMNodesTORNElements = function mapDOMNodesTORNElements(DOMNodes, parentTag, props) {
-    var _this3 = this;
 
-    if (parentTag === void 0) {
-      parentTag = false;
-    }
-
-    if (props === void 0) {
-      props = this.props;
-    }
-
-    var _props2 = props,
-        ignoreNodesFunction = _props2.ignoreNodesFunction,
-        ignoredTags = _props2.ignoredTags,
-        alterNode = _props2.alterNode,
-        alterData = _props2.alterData,
-        alterChildren = _props2.alterChildren,
-        tagsStyles = _props2.tagsStyles,
-        classesStyles = _props2.classesStyles;
-    var RNElements = DOMNodes.map(function (node, nodeIndex) {
-      var _node = node,
-          children = _node.children,
-          data = _node.data;
+  mapDOMNodesTORNElements(DOMNodes, parentTag = false, props = this.props) {
+    const {
+      ignoreNodesFunction,
+      ignoredTags,
+      alterNode,
+      alterData,
+      alterChildren,
+      tagsStyles,
+      classesStyles
+    } = props;
+    let RNElements = DOMNodes.map((node, nodeIndex) => {
+      let {
+        children,
+        data
+      } = node;
 
       if (ignoreNodesFunction && ignoreNodesFunction(node, parentTag) === true) {
         return false;
       }
 
-      if (ignoredTags.map(function (tag) {
-        return tag.toLowerCase();
-      }).indexOf(node.name && node.name.toLowerCase()) !== -1) {
+      if (ignoredTags.map(tag => tag.toLowerCase()).indexOf(node.name && node.name.toLowerCase()) !== -1) {
         return false;
       }
 
       if (alterNode) {
-        var alteredNode = alterNode(node);
+        const alteredNode = alterNode(node);
         node = alteredNode || node;
       }
 
-      var _node2 = node,
-          type = _node2.type,
-          attribs = _node2.attribs,
-          name = _node2.name,
-          parent = _node2.parent;
+      const {
+        type,
+        attribs,
+        name,
+        parent
+      } = node;
 
       if (alterData && data) {
-        var alteredData = alterData(node);
+        const alteredData = alterData(node);
         data = alteredData || data;
       }
 
       if (alterChildren && children) {
-        var alteredChildren = alterChildren(node);
+        const alteredChildren = alterChildren(node);
         children = alteredChildren || children;
       } // Remove whitespaces to check if it's just a blank text
 
 
-      var strippedData = data && data.replace(/\s/g, '');
+      const strippedData = data && data.replace(/\s/g, '');
 
       if (type === 'text') {
         if (!strippedData || !strippedData.length) {
@@ -381,7 +322,7 @@ function (_PureComponent) {
           wrapper: 'Text',
           data: data,
           attribs: attribs || {},
-          parent: parent,
+          parent,
           parentTag: parent && parent.name,
           tagName: name || 'rawtext'
         };
@@ -390,59 +331,59 @@ function (_PureComponent) {
       if (type === 'tag') {
         if (children) {
           // Recursively map all children with this method
-          children = _this3.associateRawTexts(_this3.mapDOMNodesTORNElements(children, name));
+          children = this.associateRawTexts(this.mapDOMNodesTORNElements(children, name));
         }
 
-        if (_this3.childrenNeedAView(children) || _HTMLUtils.BLOCK_TAGS.indexOf(name.toLowerCase()) !== -1) {
+        if (this.childrenNeedAView(children) || _HTMLUtils.BLOCK_TAGS.indexOf(name.toLowerCase()) !== -1) {
           // If children cannot be nested in a Text, or if the tag
           // maps to a block element, use a view
           return {
             wrapper: 'View',
-            children: children,
-            attribs: attribs,
-            parent: parent,
+            children,
+            attribs,
+            parent,
             tagName: name,
-            parentTag: parentTag
+            parentTag
           };
         } else if (_HTMLUtils.TEXT_TAGS.indexOf(name.toLowerCase()) !== -1 || _HTMLUtils.MIXED_TAGS.indexOf(name.toLowerCase()) !== -1) {
           // We are able to nest its children inside a Text
           return {
             wrapper: 'Text',
-            children: children,
-            attribs: attribs,
-            parent: parent,
+            children,
+            attribs,
+            parent,
             tagName: name,
-            parentTag: parentTag
+            parentTag
           };
-        } else if (_this3.renderers[name] && _this3.renderers[name].wrapper) {
+        } else if (this.renderers[name] && this.renderers[name].wrapper) {
           return {
-            wrapper: _this3.renderers[name].wrapper,
-            children: children,
-            attribs: attribs,
-            parent: parent,
+            wrapper: this.renderers[name].wrapper,
+            children,
+            attribs,
+            parent,
             tagName: name,
-            parentTag: parentTag
+            parentTag
           };
         }
 
         return {
           wrapper: 'View',
-          children: children,
-          attribs: attribs,
-          parent: parent,
+          children,
+          attribs,
+          parent,
           tagName: name,
-          parentTag: parentTag
+          parentTag
         };
       }
-    }).filter(function (parsedNode) {
-      return parsedNode !== false && parsedNode !== undefined;
-    }) // remove useless nodes
-    .map(function (parsedNode, nodeIndex) {
-      var wrapper = parsedNode.wrapper,
-          children = parsedNode.children,
-          attribs = parsedNode.attribs,
-          tagName = parsedNode.tagName;
-      var firstChild = children && children[0];
+    }).filter(parsedNode => parsedNode !== false && parsedNode !== undefined) // remove useless nodes
+    .map((parsedNode, nodeIndex) => {
+      const {
+        wrapper,
+        children,
+        attribs,
+        tagName
+      } = parsedNode;
+      const firstChild = children && children[0];
 
       if (firstChild && children.length === 1) {
         // Specific tweaks for wrappers with a single child
@@ -452,29 +393,31 @@ function (_PureComponent) {
             attribs: _objectSpread({}, attribs, {}, firstChild.attribs),
             data: firstChild.data,
             children: [],
-            tagName: tagName,
-            nodeIndex: nodeIndex
+            tagName,
+            nodeIndex
           });
         }
       }
 
       return _objectSpread({}, parsedNode, {
-        nodeIndex: nodeIndex
+        nodeIndex
       });
-    }).map(function (parsedNode, nodeIndex) {
-      var wrapper = parsedNode.wrapper,
-          attribs = parsedNode.attribs,
-          tagName = parsedNode.tagName,
-          children = parsedNode.children;
+    }).map((parsedNode, nodeIndex) => {
+      const {
+        wrapper,
+        attribs,
+        tagName,
+        children
+      } = parsedNode;
 
-      if (wrapper === 'View' && attribs && _this3.wrapperHasTextChild(children)) {
+      if (wrapper === 'View' && attribs && this.wrapperHasTextChild(children)) {
         // When encountering a View wrapper that has some styles and also Text children,
         // let's filter out text-only styles and apply those to *all* Text children and
         // remove them from the wrapper, mimicking browsers' behaviour better.
-        var wrapperStyles = _objectSpread({}, tagsStyles[tagName] || {}, {}, (0, _HTMLStyles._getElementClassStyles)(attribs, classesStyles), {}, (0, _HTMLStyles.cssStringToObject)(attribs.style || ''));
+        const wrapperStyles = _objectSpread({}, tagsStyles[tagName] || {}, {}, (0, _HTMLStyles._getElementClassStyles)(attribs, classesStyles), {}, (0, _HTMLStyles.cssStringToObject)(attribs.style || ''));
 
-        var textChildrenInheritedStyles = {};
-        Object.keys(wrapperStyles).forEach(function (styleKey) {
+        let textChildrenInheritedStyles = {};
+        Object.keys(wrapperStyles).forEach(styleKey => {
           // Extract text-only styles
           if (_HTMLUtils.TextOnlyPropTypes.indexOf(styleKey) !== -1) {
             textChildrenInheritedStyles[styleKey] = wrapperStyles[styleKey];
@@ -490,15 +433,17 @@ function (_PureComponent) {
 
         parsedNode.attribs.style = (0, _HTMLStyles.cssObjectToString)(wrapperStyles);
 
-        for (var i = 0; i < children.length; i++) {
-          var child = children[i];
-          var _wrapper = child.wrapper,
-              _attribs = child.attribs;
+        for (let i = 0; i < children.length; i++) {
+          const child = children[i];
+          const {
+            wrapper,
+            attribs
+          } = child;
 
-          if (_wrapper === 'Text') {
+          if (wrapper === 'Text') {
             // Set (or merge) the inherited text styles extracted from the wrapper for
             // each Text child
-            if (!_attribs.style) {
+            if (!attribs.style) {
               child.attribs.style = (0, _HTMLStyles.cssObjectToString)(textChildrenInheritedStyles);
             } else {
               child.attribs.style = (0, _HTMLStyles.cssObjectToString)(_objectSpread({}, textChildrenInheritedStyles, {}, (0, _HTMLStyles.cssStringToObject)(child.attribs.style)));
@@ -521,93 +466,78 @@ function (_PureComponent) {
    * @returns {array}
    * @memberof HTML
    */
-  ;
 
-  _proto.renderRNElements = function renderRNElements(RNElements, parentWrapper, parentIndex, props) {
-    var _this4 = this;
 
-    if (parentWrapper === void 0) {
-      parentWrapper = 'root';
-    }
-
-    if (parentIndex === void 0) {
-      parentIndex = 0;
-    }
-
-    if (props === void 0) {
-      props = this.props;
-    }
-
-    var _props3 = props,
-        allowFontScaling = _props3.allowFontScaling,
-        allowedStyles = _props3.allowedStyles,
-        baseFontStyle = _props3.baseFontStyle,
-        classesStyles = _props3.classesStyles,
-        emSize = _props3.emSize,
-        ignoredStyles = _props3.ignoredStyles,
-        ptSize = _props3.ptSize,
-        tagsStyles = _props3.tagsStyles,
-        textSelectable = _props3.textSelectable;
-    return RNElements && RNElements.length ? RNElements.map(function (element, index) {
-      var attribs = element.attribs,
-          data = element.data,
-          tagName = element.tagName,
-          parentTag = element.parentTag,
-          children = element.children,
-          nodeIndex = element.nodeIndex,
-          wrapper = element.wrapper;
-      var Wrapper = wrapper === 'Text' ? _reactNative.Text : _reactNative.View;
-      var key = wrapper + "-" + parentIndex + "-" + nodeIndex + "-" + tagName + "-" + index + "-" + parentTag;
-      var convertedCSSStyles = attribs && attribs.style ? (0, _HTMLStyles.cssStringToRNStyle)(attribs.style, Wrapper === _reactNative.Text ? _HTMLUtils.STYLESETS.TEXT : _HTMLUtils.STYLESETS.VIEW, // proper prop-types validation
+  renderRNElements(RNElements, parentWrapper = 'root', parentIndex = 0, props = this.props) {
+    const {
+      allowFontScaling,
+      allowedStyles,
+      baseFontStyle,
+      classesStyles,
+      emSize,
+      ignoredStyles,
+      ptSize,
+      tagsStyles,
+      textSelectable
+    } = props;
+    return RNElements && RNElements.length ? RNElements.map((element, index) => {
+      const {
+        attribs,
+        data,
+        tagName,
+        parentTag,
+        children,
+        nodeIndex,
+        wrapper
+      } = element;
+      const Wrapper = wrapper === 'Text' ? _reactNative.Text : _reactNative.View;
+      const key = `${wrapper}-${parentIndex}-${nodeIndex}-${tagName}-${index}-${parentTag}`;
+      const convertedCSSStyles = attribs && attribs.style ? (0, _HTMLStyles.cssStringToRNStyle)(attribs.style, Wrapper === _reactNative.Text ? _HTMLUtils.STYLESETS.TEXT : _HTMLUtils.STYLESETS.VIEW, // proper prop-types validation
       {
         parentTag: tagName,
-        emSize: emSize,
-        ptSize: ptSize,
-        ignoredStyles: ignoredStyles,
-        allowedStyles: allowedStyles
+        emSize,
+        ptSize,
+        ignoredStyles,
+        allowedStyles
       }) : {};
-      var childElements = children && children.length ? children.map(function (child, childIndex) {
-        return _this4.renderRNElements([child], wrapper, index, props);
-      }) : false;
+      const childElements = children && children.length ? children.map((child, childIndex) => this.renderRNElements([child], wrapper, index, props)) : false;
 
-      if (_this4.renderers[tagName]) {
-        var customRenderer = typeof _this4.renderers[tagName] === 'function' ? _this4.renderers[tagName] : _this4.renderers[tagName].renderer;
+      if (this.renderers[tagName]) {
+        const customRenderer = typeof this.renderers[tagName] === 'function' ? this.renderers[tagName] : this.renderers[tagName].renderer;
 
         if (!customRenderer || typeof customRenderer !== 'function') {
-          console.warn("Custom renderer for " + tagName + " supplied incorrectly. Please check out the docs.");
+          console.warn(`Custom renderer for ${tagName} supplied incorrectly. Please check out the docs.`);
           return undefined;
         } // If a custom renderer is available for this tag
 
 
         return customRenderer(attribs, childElements, convertedCSSStyles, _objectSpread({}, props, {
           parentWrapper: wrapper,
-          parentTag: parentTag,
-          nodeIndex: nodeIndex,
-          parentIndex: parentIndex,
-          key: key,
-          data: data,
+          parentTag,
+          nodeIndex,
+          parentIndex,
+          key,
+          data,
           rawChildren: children
         }));
       }
 
-      var classStyles = (0, _HTMLStyles._getElementClassStyles)(attribs, classesStyles);
-      var textElement = data ? _react.default.createElement(_reactNative.Text, {
+      const classStyles = (0, _HTMLStyles._getElementClassStyles)(attribs, classesStyles);
+      const textElement = data ? _react.default.createElement(_reactNative.Text, {
         allowFontScaling: allowFontScaling,
         style: (0, _HTMLStyles.computeTextStyles)(element, {
-          defaultTextStyles: _this4.defaultTextStyles,
-          tagsStyles: tagsStyles,
-          classesStyles: classesStyles,
-          baseFontStyle: baseFontStyle,
-          emSize: emSize,
-          ptSize: ptSize,
-          ignoredStyles: ignoredStyles,
-          allowedStyles: allowedStyles
+          defaultTextStyles: this.defaultTextStyles,
+          tagsStyles,
+          classesStyles,
+          baseFontStyle,
+          emSize,
+          ptSize,
+          ignoredStyles,
+          allowedStyles
         })
       }, data) : false;
-      var style = [!tagsStyles || !tagsStyles[tagName] ? (Wrapper === _reactNative.Text ? _this4.defaultTextStyles : _this4.defaultBlockStyles)[tagName] : undefined, tagsStyles ? tagsStyles[tagName] : undefined, classStyles, convertedCSSStyles].filter(function (s) {
-        return s !== undefined;
-      });
-      var renderersProps = {};
+      const style = [!tagsStyles || !tagsStyles[tagName] ? (Wrapper === _reactNative.Text ? this.defaultTextStyles : this.defaultBlockStyles)[tagName] : undefined, tagsStyles ? tagsStyles[tagName] : undefined, classStyles, convertedCSSStyles].filter(s => s !== undefined);
+      const renderersProps = {};
 
       if (Wrapper === _reactNative.Text) {
         renderersProps.allowFontScaling = allowFontScaling;
@@ -619,18 +549,20 @@ function (_PureComponent) {
         style: style
       }, renderersProps), textElement, childElements);
     }) : false;
-  };
+  }
 
-  _proto.render = function render() {
-    var _this$props3 = this.props,
-        allowFontScaling = _this$props3.allowFontScaling,
-        customWrapper = _this$props3.customWrapper,
-        remoteLoadingView = _this$props3.remoteLoadingView,
-        remoteErrorView = _this$props3.remoteErrorView;
-    var _this$state = this.state,
-        RNNodes = _this$state.RNNodes,
-        loadingRemoteURL = _this$state.loadingRemoteURL,
-        errorLoadingRemoteURL = _this$state.errorLoadingRemoteURL;
+  render() {
+    const {
+      allowFontScaling,
+      customWrapper,
+      remoteLoadingView,
+      remoteErrorView
+    } = this.props;
+    const {
+      RNNodes,
+      loadingRemoteURL,
+      errorLoadingRemoteURL
+    } = this.state;
 
     if (!RNNodes && !loadingRemoteURL && !errorLoadingRemoteURL) {
       return null;
@@ -659,10 +591,9 @@ function (_PureComponent) {
     return customWrapper ? customWrapper(RNNodes) : _react.default.createElement(_reactNative.View, {
       style: this.props.containerStyle || {}
     }, RNNodes);
-  };
+  }
 
-  return HTML;
-}(_react.PureComponent);
+}
 
 exports.default = HTML;
 HTML.defaultProps = {

@@ -1,15 +1,13 @@
 "use strict";
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.generateDefaultBlockStyles = generateDefaultBlockStyles;
 exports.generateDefaultTextStyles = generateDefaultTextStyles;
-var BASE_FONT_SIZE = 14;
+const BASE_FONT_SIZE = 14;
 
-function generateDefaultBlockStyles(baseFontSize) {
-  if (baseFontSize === void 0) {
-    baseFontSize = BASE_FONT_SIZE;
-  }
-
+function generateDefaultBlockStyles(baseFontSize = BASE_FONT_SIZE) {
   return {
     div: {},
     ul: {
@@ -32,11 +30,7 @@ function generateDefaultBlockStyles(baseFontSize) {
   };
 }
 
-function generateDefaultTextStyles(baseFontSize) {
-  if (baseFontSize === void 0) {
-    baseFontSize = BASE_FONT_SIZE;
-  }
-
+function generateDefaultTextStyles(baseFontSize = BASE_FONT_SIZE) {
   return {
     u: {
       textDecorationLine: 'underline'

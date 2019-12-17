@@ -1,6 +1,8 @@
 "use strict";
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.cssStringToObject = cssStringToObject;
 exports.cssObjectToString = cssObjectToString;
 exports._constructStyles = _constructStyles;
@@ -25,9 +27,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 * @return the style as an obect
 */
 function cssStringToObject(str) {
-  return str.split(';').map(function (prop) {
-    return prop.split(':');
-  }).reduce(function (acc, prop) {
+  return str.split(';').map(prop => prop.split(':')).reduce((acc, prop) => {
     if (prop.length === 2) {
       acc[prop[0].trim()] = prop[1].trim();
     }
@@ -37,9 +37,9 @@ function cssStringToObject(str) {
 }
 
 function cssObjectToString(obj) {
-  var string = '';
-  Object.keys(obj).forEach(function (style) {
-    string += style + ":" + obj[style] + ";";
+  let string = '';
+  Object.keys(obj).forEach(style => {
+    string += `${style}:${obj[style]};`;
   });
   return string;
 }
@@ -53,20 +53,20 @@ function cssObjectToString(obj) {
  */
 
 
-function _constructStyles(_ref) {
-  var tagName = _ref.tagName,
-      htmlAttribs = _ref.htmlAttribs,
-      passProps = _ref.passProps,
-      additionalStyles = _ref.additionalStyles,
-      _ref$styleSet = _ref.styleSet,
-      styleSet = _ref$styleSet === void 0 ? 'VIEW' : _ref$styleSet,
-      baseFontSize = _ref.baseFontSize;
-  var defaultTextStyles = (0, _HTMLDefaultStyles.generateDefaultTextStyles)(baseFontSize);
-  var defaultBlockStyles = (0, _HTMLDefaultStyles.generateDefaultBlockStyles)(baseFontSize);
-  passProps.ignoredStyles.forEach(function (ignoredStyle) {
+function _constructStyles({
+  tagName,
+  htmlAttribs,
+  passProps,
+  additionalStyles,
+  styleSet = 'VIEW',
+  baseFontSize
+}) {
+  let defaultTextStyles = (0, _HTMLDefaultStyles.generateDefaultTextStyles)(baseFontSize);
+  let defaultBlockStyles = (0, _HTMLDefaultStyles.generateDefaultBlockStyles)(baseFontSize);
+  passProps.ignoredStyles.forEach(ignoredStyle => {
     htmlAttribs[ignoredStyle] && delete htmlAttribs[ignoredStyle];
   });
-  var style = [(styleSet === 'VIEW' ? defaultBlockStyles : defaultTextStyles)[tagName], passProps.tagsStyles ? passProps.tagsStyles[tagName] : undefined, _getElementClassStyles(htmlAttribs, passProps.classesStyles), htmlAttribs.style ? cssStringToRNStyle(htmlAttribs.style, _HTMLUtils.STYLESETS[styleSet], _objectSpread({}, passProps, {
+  let style = [(styleSet === 'VIEW' ? defaultBlockStyles : defaultTextStyles)[tagName], passProps.tagsStyles ? passProps.tagsStyles[tagName] : undefined, _getElementClassStyles(htmlAttribs, passProps.classesStyles), htmlAttribs.style ? cssStringToRNStyle(htmlAttribs.style, _HTMLUtils.STYLESETS[styleSet], _objectSpread({}, passProps, {
     parentTag: tagName
   })) : undefined];
 
@@ -74,9 +74,7 @@ function _constructStyles(_ref) {
     style = style.concat(!additionalStyles.length ? [additionalStyles] : additionalStyles);
   }
 
-  return style.filter(function (style) {
-    return style !== undefined;
-  });
+  return style.filter(style => style !== undefined);
 }
 /**
  * Computes the styles of a text node
@@ -88,18 +86,18 @@ function _constructStyles(_ref) {
 
 
 function computeTextStyles(element, passProps) {
-  var finalStyle = {}; // Construct an array with the styles of each level of the text node, ie :
+  let finalStyle = {}; // Construct an array with the styles of each level of the text node, ie :
   // [element, parent1, parent2, parent3...]
 
-  var parentStyles = _recursivelyComputeParentTextStyles(element, passProps); // Only merge the keys that aren't yet applied to the final object. ie:
+  const parentStyles = _recursivelyComputeParentTextStyles(element, passProps); // Only merge the keys that aren't yet applied to the final object. ie:
   // if fontSize is already set in the first iteration, ignore the fontSize that
   // we got from the 3rd iteration because of a class for instance, hence
   // respecting the proper style inheritance
 
 
-  parentStyles.forEach(function (styles) {
-    Object.keys(styles).forEach(function (styleKey) {
-      var styleValue = styles[styleKey];
+  parentStyles.forEach(styles => {
+    Object.keys(styles).forEach(styleKey => {
+      const styleValue = styles[styleKey];
 
       if (!finalStyle[styleKey]) {
         finalStyle[styleKey] = styleValue;
@@ -111,25 +109,25 @@ function computeTextStyles(element, passProps) {
   return _objectSpread({}, passProps.baseFontStyle, {}, finalStyle);
 }
 
-function _recursivelyComputeParentTextStyles(element, passProps, styles) {
-  if (styles === void 0) {
-    styles = [];
-  }
+function _recursivelyComputeParentTextStyles(element, passProps, styles = []) {
+  const {
+    attribs,
+    name
+  } = element;
+  const {
+    classesStyles,
+    tagsStyles,
+    defaultTextStyles
+  } = passProps; // Construct every style for this node
 
-  var attribs = element.attribs,
-      name = element.name;
-  var classesStyles = passProps.classesStyles,
-      tagsStyles = passProps.tagsStyles,
-      defaultTextStyles = passProps.defaultTextStyles; // Construct every style for this node
+  const HTMLAttribsStyles = attribs && attribs.style ? cssStringToRNStyle(attribs.style, _HTMLUtils.STYLESETS.TEXT, passProps) : {};
 
-  var HTMLAttribsStyles = attribs && attribs.style ? cssStringToRNStyle(attribs.style, _HTMLUtils.STYLESETS.TEXT, passProps) : {};
+  const classStyles = _getElementClassStyles(attribs, classesStyles);
 
-  var classStyles = _getElementClassStyles(attribs, classesStyles);
+  const userTagStyles = tagsStyles[name];
+  const defaultTagStyles = defaultTextStyles[name]; // Merge those according to their priority level
 
-  var userTagStyles = tagsStyles[name];
-  var defaultTagStyles = defaultTextStyles[name]; // Merge those according to their priority level
-
-  var mergedStyles = _objectSpread({}, defaultTagStyles, {}, userTagStyles, {}, classStyles, {}, HTMLAttribsStyles);
+  const mergedStyles = _objectSpread({}, defaultTagStyles, {}, userTagStyles, {}, classStyles, {}, HTMLAttribsStyles);
 
   styles.push(mergedStyles);
 
@@ -149,15 +147,11 @@ function _recursivelyComputeParentTextStyles(element, passProps, styles) {
  */
 
 
-function _getElementClassStyles(htmlAttribs, classesStyles) {
-  if (classesStyles === void 0) {
-    classesStyles = {};
-  }
+function _getElementClassStyles(htmlAttribs, classesStyles = {}) {
+  const elementClasses = _getElementCSSClasses(htmlAttribs);
 
-  var elementClasses = _getElementCSSClasses(htmlAttribs);
-
-  var styles = {};
-  elementClasses.forEach(function (className) {
+  let styles = {};
+  elementClasses.forEach(className => {
     if (classesStyles[className]) {
       styles = _objectSpread({}, styles, {}, classesStyles[className]);
     }
@@ -188,29 +182,17 @@ function _getElementCSSClasses(htmlAttribs) {
  */
 
 
-function cssToRNStyle(css, styleset, _ref2) {
-  var emSize = _ref2.emSize,
-      ptSize = _ref2.ptSize,
-      ignoredStyles = _ref2.ignoredStyles,
-      allowedStyles = _ref2.allowedStyles;
-  var styleProps = _HTMLUtils.stylePropTypes[styleset];
-  return Object.keys(css).filter(function (key) {
-    return allowedStyles ? allowedStyles.indexOf(key) !== -1 : true;
-  }).filter(function (key) {
-    return (ignoredStyles || []).indexOf(key) === -1;
-  }).map(function (key) {
-    return [key, css[key]];
-  }).map(function (_ref3) {
-    var key = _ref3[0],
-        value = _ref3[1];
+function cssToRNStyle(css, styleset, {
+  emSize,
+  ptSize,
+  ignoredStyles,
+  allowedStyles
+}) {
+  const styleProps = _HTMLUtils.stylePropTypes[styleset];
+  return Object.keys(css).filter(key => allowedStyles ? allowedStyles.indexOf(key) !== -1 : true).filter(key => (ignoredStyles || []).indexOf(key) === -1).map(key => [key, css[key]]).map(([key, value]) => {
     // Key convert
-    return [key.split('-').map(function (item, index) {
-      return index === 0 ? item : item[0].toUpperCase() + item.substr(1);
-    }).join(''), value];
-  }).map(function (_ref4) {
-    var key = _ref4[0],
-        value = _ref4[1];
-
+    return [key.split('-').map((item, index) => index === 0 ? item : item[0].toUpperCase() + item.substr(1)).join(''), value];
+  }).map(([key, value]) => {
     if (styleProps.indexOf(key) === -1) {
       return undefined;
     }
@@ -227,18 +209,17 @@ function cssToRNStyle(css, styleset, _ref2) {
       }
 
       if (value.search('em') !== -1) {
-        var pxSize = parseFloat(value.replace('em', '')) * emSize;
+        const pxSize = parseFloat(value.replace('em', '')) * emSize;
         return [key, pxSize];
       }
 
       if (value.search('pt') !== -1) {
-        var _pxSize = parseFloat(value.replace('pt', '')) * ptSize;
-
-        return [key, _pxSize];
+        const pxSize = parseFloat(value.replace('pt', '')) * ptSize;
+        return [key, pxSize];
       } // See if we can convert a 20px to a 20 automagically
 
 
-      var numericValue = parseFloat(value.replace('px', ''));
+      const numericValue = parseFloat(value.replace('px', ''));
 
       if (key !== 'fontWeight' && !isNaN(numericValue)) {
         if (styleProps.indexOf(key) !== -1) {
@@ -252,11 +233,7 @@ function cssToRNStyle(css, styleset, _ref2) {
     }
 
     return [key, value];
-  }).filter(function (prop) {
-    return prop !== undefined;
-  }).reduce(function (acc, _ref5) {
-    var key = _ref5[0],
-        value = _ref5[1];
+  }).filter(prop => prop !== undefined).reduce((acc, [key, value]) => {
     acc[key] = value;
     return acc;
   }, {});
@@ -269,7 +246,7 @@ function cssToRNStyle(css, styleset, _ref2) {
 
 
 function mapAbsoluteFontSize(key, value) {
-  var fontSize = value;
+  let fontSize = value;
 
   if (_HTMLUtils.ABSOLUTE_FONT_SIZE.hasOwnProperty(value)) {
     fontSize = _HTMLUtils.ABSOLUTE_FONT_SIZE[value];
@@ -284,10 +261,6 @@ function mapAbsoluteFontSize(key, value) {
 */
 
 
-function cssStringToRNStyle(str, styleset, options) {
-  if (styleset === void 0) {
-    styleset = _HTMLUtils.STYLESETS.TEXT;
-  }
-
+function cssStringToRNStyle(str, styleset = _HTMLUtils.STYLESETS.TEXT, options) {
   return cssToRNStyle(cssStringToObject(str), styleset, options);
 }
