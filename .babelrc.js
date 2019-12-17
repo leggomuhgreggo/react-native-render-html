@@ -1,25 +1,18 @@
-
-
-module.exports =  {
+module.exports = {
   presets: [
     [
-      '@babel/env',
+      "@babel/preset-env",
       {
-        targets: {
-          node: 'current'
-        },
-        modules: 'cjs',
+        modules: "false",
+        useBuiltIns: "usage"
       }
     ],
-    '@babel/preset-react',
-    '@babel/preset-flow'
+    "@babel/preset-react"
   ],
   plugins: [
-    '@babel/plugin-transform-async-to-generator',
-    ['babel-plugin-transform-react-remove-prop-types', { mode: 'wrap' }],
-    ['@babel/plugin-proposal-class-properties', { loose: true }],
-    ['@babel/plugin-proposal-object-rest-spread', { useBuiltIns: true }],
-    '@babel/plugin-proposal-nullish-coalescing-operator',
-    'babel-plugin-add-module-exports'
+    ["babel-plugin-transform-react-remove-prop-types", { mode: "wrap" }],
+    ["@babel/plugin-proposal-class-properties", { loose: true }],
+    ["@babel/plugin-proposal-object-rest-spread", { useBuiltIns: true }],
+    "@babel/plugin-proposal-nullish-coalescing-operator"
   ]
 };
